@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Диспетчерская — дежурный Зинченко А.А.</title>
+<title>Оператор Зинченко А.А. — прямая линия</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
@@ -12,7 +12,6 @@
     color: #d8e0e8;
     line-height: 1.6;
   }
-  /* Верхняя панель как в диспетчерской */
   .topbar {
     background: #11161f;
     border-bottom: 2px solid #e94560;
@@ -59,21 +58,15 @@
     padding-bottom: 8px;
   }
 
-  /* Бейдж дежурного */
-  .badge-line {
-    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  .operator-card {
+    display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap;
   }
-  .operator-badge {
-    background: #16202c;
-    border: 1px solid #2a3646;
-    border-left: 4px solid #e94560;
-    border-radius: 8px;
-    padding: 14px 20px;
-  }
-  .operator-badge .name { font-size: 1.3rem; font-weight: bold; color: #fff; }
-  .operator-badge .role { color: #8fa3b8; font-size: 0.9rem; }
+  .operator-info { flex: 1; min-width: 260px; }
+  .operator-info .name { font-size: 1.5rem; font-weight: bold; color: #fff; }
+  .operator-info .role { color: #8fa3b8; margin-bottom: 12px; }
+  .operator-info p { font-size: 0.95rem; color: #b8c4d2; }
+  .operator-info em { color: #ffd9dc; }
 
-  /* Кнопка прямой линии */
   .direct {
     display: inline-block;
     background: #e94560;
@@ -90,12 +83,8 @@
   .direct:hover { background: #ff5c77; box-shadow: 0 0 28px rgba(233,69,96,0.7); }
   .direct small { display: block; font-weight: normal; font-size: 0.75rem; opacity: 0.85; }
 
-  /* Таблица каналов */
   table.channels { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
-  table.channels td {
-    padding: 10px 12px;
-    border-bottom: 1px solid #1f2a38;
-  }
+  table.channels td { padding: 10px 12px; border-bottom: 1px solid #1f2a38; }
   table.channels a {
     color: #fff; background: #1d2b3a;
     padding: 5px 18px; border-radius: 6px;
@@ -104,7 +93,9 @@
   table.channels a:hover { background: #e94560; border-color: #e94560; }
   table.channels .num { color: #e94560; font-weight: bold; font-size: 1.1rem; }
 
-  /* Журнал вызовов (чат) */
+  ul.advice li { margin: 8px 0 8px 20px; }
+  ul.advice li::marker { color: #e94560; }
+
   .console-log {
     background: #0d1219;
     border: 1px solid #1f2a38;
@@ -152,35 +143,41 @@
     font-size: 0.85rem;
     border-top: 1px solid #1f2a38;
   }
+  footer .red { color: #e94560; font-weight: bold; }
 </style>
 </head>
 <body>
 
 <div class="topbar">
-  <div class="id">ДИСПЕТЧЕРСКАЯ <span>· ЛИНИЯ ПРИЁМА ОБРАЩЕНИЙ</span></div>
-  <div class="status"><span class="dot"></span> ДЕЖУРНЫЙ НА ЛИНИИ</div>
+  <div class="id">ЛИНИЯ ПРИЁМА ОБРАЩЕНИЙ <span>· ОПЕРАТОР НА МЕСТЕ</span></div>
+  <div class="status"><span class="dot"></span> НА СВЯЗИ</div>
   <div class="clock" id="clock"></div>
 </div>
 
 <div class="wrap">
 
   <div class="panel">
-    <h2>Дежурный смены</h2>
-    <div class="badge-line">
-      <div class="operator-badge">
+    <h2>Оператор линии</h2>
+    <div class="operator-card">
+      <div class="operator-info">
         <div class="name">Зинченко А.А.</div>
-        <div class="role">оператор приёма обращений · личная линия</div>
+        <div class="role">оператор приёма обращений</div>
+        <p>
+          Здравствуйте. Меня зовут Александр, по документам — Зинченко А.А.
+          Я принимаю обращения на своей личной линии: выслушаю, подскажу,
+          куда и как действовать. Работаю так, как учат диспетчеров: сначала
+          адрес, потом суть, потом — порядок действий.
+          <em>Если ситуация экстренная — не ждите, звоните 112 или на номера
+          из таблицы ниже. Моя линия — для обращений и консультаций.</em>
+        </p>
       </div>
-      <a class="direct" href="tel:+79939355378">
-        📞 ПРЯМАЯ ЛИНИЯ ДЕЖУРНОГО
-        <small>+7 993 935-53-78 — нажмите для вызова</small>
-      </a>
+      <div>
+        <a class="direct" href="tel:+79939355378">
+          📞 ПРЯМАЯ ЛИНИЯ ОПЕРАТОРА
+          <small>+7 993 935-53-78 — нажмите для вызова</small>
+        </a>
+      </div>
     </div>
-    <p class="note">
-      <b>Важно:</b> это личная линия приёма обращений, а не государственная
-      экстренная служба. При пожаре, угрозе жизни, crime в процессе — звоните
-      112 или по каналам ниже.
-    </p>
   </div>
 
   <div class="panel">
@@ -195,37 +192,47 @@
   </div>
 
   <div class="panel">
-    <h2>Журнал обращений — тестовый режим</h2>
+    <h2>Как я принимаю обращение</h2>
+    <ul class="advice">
+      <li><strong>Адрес — первым.</strong> Улица, дом, подъезд, этаж. Если связь оборвётся — помощь уже знает, куда ехать.</li>
+      <li><strong>Суть — одной фразой.</strong> «Человеку плохо, без сознания» — этого достаточно, дальше вопросы задаю я.</li>
+      <li><strong>Трубку не бросаем.</strong> Пока я не скажу «принято» или «можно закрывать», линия остаётся открытой.</li>
+      <li><strong>Спокойно и по порядку.</strong> Страх — это нормально. Но чёткая речь экономит минуты.</li>
+    </ul>
+  </div>
+
+  <div class="panel">
+    <h2>Канал обращений — демо-режим</h2>
     <div class="console-log" id="log">
-      <div class="line sys">[система] канал связи открыт. Дежурный: Зинченко А.А.</div>
-      <div class="line duty">[Зинченко А.А.] На связи. Назовите характер обращения и адрес.</div>
+      <div class="line sys">[система] канал открыт. Оператор: Зинченко А.А.</div>
+      <div class="line duty">[Зинченко А.А.] На связи. Назовите адрес и суть обращения.</div>
     </div>
     <div class="input-row">
       <input type="text" id="inp" placeholder="Введите обращение…" onkeydown="if(event.key==='Enter')send()">
       <button onclick="send()">ПЕРЕДАТЬ</button>
     </div>
-    <p class="note">Тестовый канал: сообщения не выходят в экстренные службы. Реальный вызов — кнопки и номера выше.</p>
+    <p class="note"><b>Демо:</b> автоматические ответы работают, пока я не на линии. Реальный звонок ко мне — кнопка «Прямая линия оператора» выше.</p>
   </div>
 
 </div>
 
 <footer>
-  Прямая линия дежурного: +7 993 935-53-78 · Экстренные вызовы: 112 / 101 / 102 / 103 / 104
+  Оператор Зинченко А.А. · прямая линия: +7 993 935-53-78 ·
+  Экстренные вызовы: <span class="red">112 / 101 / 102 / 103 / 104</span>
 </footer>
 
 <script>
-// Часы на пульте
 setInterval(() => {
   document.getElementById('clock').textContent =
     new Date().toLocaleTimeString('ru-RU');
 }, 1000);
 
 const replies = [
-  { keys: ["пожар", "горит", "дым"], text: "Принято. Адрес: улица, дом, этаж — по порядку. Крупное возгорание не тушите сами, выводите людей." },
-  { keys: ["скорая", "плохо", "болит", "сознание", "сердце"], text: "Фиксирую. Дышит? В сознании? Возраст? Соединяю со скорой — оставайтесь на линии." },
-  { keys: ["газ", "пахнет"], text: "Свет и электроприборы не трогать, огня нет. Окна открыть, выйти из помещения. Передаю на канал 104." },
-  { keys: ["полиция", "взлом", "вор", "кража"], text: "Спокойно. Адрес, что происходит, сколько человек на месте. Передаю на канал 102." },
-  { keys: ["страшно", "помогите"], text: "Вы heard, я на связи. Дышите ровно. Первое: адрес. Второе: что случилось. Действуем по порядку." },
+  { keys: ["пожар", "горит", "дым"], text: "Принял. Адрес: улица, дом, этаж — по порядку. Крупное возгорание не тушите сами, выводите людей и звоните 101." },
+  { keys: ["скорая", "плохо", "болит", "сознание", "сердце"], text: "Фиксирую. Дышит? В сознании? Возраст? Если критично — сразу 103, я объясню, что говорить." },
+  { keys: ["газ", "пахнет"], text: "Свет и электроприборы не трогать, открытого огня нет. Окна открыть, выйти из помещения. Канал 104 — параллельно." },
+  { keys: ["полиция", "взлом", "вор", "кража"], text: "Спокойно. Адрес, что происходит, сколько человек на месте. Параллельно — 102, не ждите меня." },
+  { keys: ["страшно", "помогите"], text: "Вы меня слышите, я на связи. Дышите ровно. Первое — адрес. Второе — что случилось. Действуем по порядку." },
   { keys: ["спасибо"], text: "Принято. Канал свободен. Берегите себя." }
 ];
 function now() { return new Date().toLocaleTimeString('ru-RU'); }
@@ -244,7 +251,7 @@ function send() {
   const low = text.toLowerCase();
   const hit = replies.find(r => r.keys.some(k => low.includes(k)));
   const reply = hit ? hit.text
-    : "Принято. Уточните адрес: улица, дом, подъезд — и суть обращения одной фразой.";
+    : "Принял. Уточните адрес: улица, дом, подъезд — и суть обращения одной фразой.";
   setTimeout(() => addLine('duty', 'Зинченко А.А.', reply), 700);
 }
 </script>
