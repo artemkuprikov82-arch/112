@@ -3,120 +3,255 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>911 — экстренные службы России</title>
+<title>Служба 911 — на связи оператор Анна</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     font-family: 'Segoe UI', Arial, sans-serif;
-    background: linear-gradient(135deg, #1a1a2e, #16213e);
-    color: #fff;
-    min-height: 100vh;
+    background: #10131a;
+    color: #e8e8f0;
+    line-height: 1.6;
   }
   header {
+    background: linear-gradient(135deg, #b3121f, #6d0f18);
+    padding: 50px 20px 40px;
     text-align: center;
-    padding: 60px 20px 30px;
   }
-  header h1 {
-    font-size: 4rem;
-    color: #e94560;
-    letter-spacing: 8px;
-    text-shadow: 0 0 20px rgba(233, 69, 96, 0.5);
-  }
-  header p { margin-top: 10px; font-size: 1.2rem; color: #a8a8c3; }
-  .cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 20px;
-    max-width: 1000px;
-    margin: 40px auto;
-    padding: 0 20px;
-  }
-  .card {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 16px;
-    padding: 30px;
-    text-align: center;
-    transition: transform 0.2s, background 0.2s;
-  }
-  .card:hover {
-    transform: translateY(-5px);
-    background: rgba(233, 69, 96, 0.15);
-  }
-  .card .icon { font-size: 3rem; }
-  .card h2 { margin: 12px 0 6px; font-size: 1.4rem; }
-  .card .num {
+  header .badge {
     display: inline-block;
-    margin-top: 14px;
-    padding: 12px 36px;
+    background: rgba(255,255,255,0.15);
+    padding: 6px 18px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+  }
+  header h1 { font-size: 2.4rem; }
+  header p.sub { margin-top: 10px; color: #ffd9dc; font-size: 1.1rem; }
+
+  .wrap { max-width: 900px; margin: 0 auto; padding: 30px 20px; }
+
+  section { margin-bottom: 45px; }
+  h2 {
+    font-size: 1.5rem;
+    color: #ff6b6b;
+    margin-bottom: 14px;
+    border-left: 4px solid #e94560;
+    padding-left: 12px;
+  }
+
+  .greeting {
+    background: rgba(255,255,255,0.05);
+    border-radius: 14px;
+    padding: 24px;
+    font-size: 1.05rem;
+  }
+  .greeting em { color: #ffd9dc; }
+
+  .numbers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px;
+  }
+  .n {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 18px;
+    text-align: center;
+  }
+  .n strong { display: block; font-size: 1.8rem; color: #ff6b6b; }
+  .n span { font-size: 0.95rem; color: #b8b8c8; }
+  .n a {
+    display: inline-block;
+    margin-top: 8px;
+    color: #fff;
+    background: #e94560;
+    padding: 8px 24px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  ul.advice li { margin: 10px 0 10px 20px; }
+  ul.advice li::marker { color: #e94560; }
+
+  /* Кнопка личного номера */
+  .callbtn {
+    display: inline-block;
     background: #e94560;
     color: #fff;
-    font-size: 1.6rem;
-    font-weight: bold;
+    padding: 14px 40px;
     border-radius: 40px;
+    font-size: 1.4rem;
+    font-weight: bold;
     text-decoration: none;
     transition: background 0.2s;
   }
-  .card .num:hover { background: #ff6b81; }
-  .info {
-    max-width: 700px;
-    margin: 30px auto;
+  .callbtn:hover { background: #ff6b81; }
+
+  /* Мини-чат */
+  .chat {
+    background: rgba(255,255,255,0.05);
+    border-radius: 14px;
     padding: 20px;
-    background: rgba(255, 255, 255, 0.05);
-    border-left: 4px solid #e94560;
-    border-radius: 8px;
-    line-height: 1.6;
+    max-width: 560px;
   }
+  .chat .log {
+    max-height: 260px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .msg {
+    max-width: 80%;
+    padding: 10px 14px;
+    border-radius: 14px;
+    font-size: 0.95rem;
+  }
+  .msg.me { align-self: flex-end; background: #2b3a67; }
+  .msg.op { align-self: flex-start; background: #7a1220; }
+  .chat input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    font-size: 1rem;
+  }
+
   footer {
     text-align: center;
-    padding: 30px;
-    color: #6c6c8a;
+    padding: 30px 20px;
+    color: #7c7c90;
     font-size: 0.9rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
   }
+  footer .red { color: #ff6b6b; font-weight: bold; }
 </style>
 </head>
 <body>
 
 <header>
-  <h1>911</h1>
-  <p>Единая страница экстренных служб России</p>
+  <div class="badge">СЛУЖБА СПАСЕНИЯ 911 · НА СВЯЗИ 24/7</div>
+  <h1>Здравствуйте, я Анна</h1>
+  <p class="sub">Оператор горячей линии. Стаж — 7 лет. Я та, кто ответит вам в трудную минуту.</p>
 </header>
 
-<div class="cards">
-  <div class="card">
-    <div class="icon">🚒</div>
-    <h2>Пожарная охрана</h2>
-    <a class="num" href="tel:101">101</a>
-  </div>
-  <div class="card">
-    <div class="icon">👮</div>
-    <h2>Полиция</h2>
-    <a class="num" href="tel:102">102</a>
-  </div>
-  <div class="card">
-    <div class="icon">🚑</div>
-    <h2>Скорая помощь</h2>
-    <a class="num" href="tel:103">103</a>
-  </div>
-  <div class="card">
-    <div class="icon">⛽</div>
-    <h2>Газовая служба</h2>
-    <a class="num" href="tel:104">104</a>
-  </div>
-  <div class="card">
-    <div class="icon">📞</div>
-    <h2>Единый номер 112</h2>
-    <a class="num" href="tel:112">112</a>
-  </div>
-</div>
+<div class="wrap">
 
-<div class="info">
-  <strong>Как звонить правильно:</strong> назовите адрес и что случилось, укажите свою фамилию и номер телефона, не бросайте трубку, пока диспетчер не закончит разговор. Звонок на номера 101–104 и 112 бесплатный с любых телефонов, в том числе без SIM-карты.
+  <section>
+    <div class="greeting">
+      Каждый день я принимаю десятки звонков: кому-то нужна скорая, у кого-то
+      пожар в соседнем подъезде, кто-то просто растерялся и не знает, куда
+      звонить. Я хочу, чтобы вы знали: <em>не бывает глупых звонков</em> —
+      бывают ситуации, где секунды решают всё. Ниже — то, что я советую
+      каждому. И маленький чат, где вы можете «потренироваться» в диалоге со мной.
+    </div>
+  </section>
+
+  <section>
+    <h2>Позвонить мне напрямую</h2>
+    <p style="margin-bottom:16px; color:#b8b8c8;">
+      Это личная линия проекта, а не государственная экстренная служба.
+      В критической ситуации — пожар, скорая, полиция, запах газа —
+      звоните на номера из списка ниже.
+    </p>
+    <a class="callbtn" href="tel:+79939355378">📞 +7 993 935-53-78</a>
+  </section>
+
+  <section>
+    <h2>Экстренные номера</h2>
+    <div class="numbers">
+      <div class="n">
+        <strong>112</strong><span>единый номер, работает везде и без SIM-карты</span>
+        <a href="tel:112">Позвонить</a>
+      </div>
+      <div class="n">
+        <strong>101</strong><span>пожарная охрана</span>
+        <a href="tel:101">Позвонить</a>
+      </div>
+      <div class="n">
+        <strong>102</strong><span>полиция</span>
+        <a href="tel:102">Позвонить</a>
+      </div>
+      <div class="n">
+        <strong>103</strong><span>скорая помощь</span>
+        <a href="tel:103">Позвонить</a>
+      </div>
+      <div class="n">
+        <strong>104</strong><span>газовая служба</span>
+        <a href="tel:104">Позвонить</a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Что я прошу говорить в первую очередь</h2>
+    <ul class="advice">
+      <li><strong>Адрес — сразу.</strong> Улица, дом, подъезд, этаж. Это первое, что я вношу в систему, потому что если связь оборвётся — бригада всё равно поедет.</li>
+      <li><strong>Что случилось — в двух словах.</strong> «Мужчине плохо, без сознания» — этого достаточно, дальше я задаю вопросы сама.</li>
+      <li><strong>Не бросайте трубку.</strong> Пока я не скажу «ожидайте» или «повесить трубку можно», линия должна оставаться открытой.</li>
+      <li><strong>Говорите спокойно.</strong> Я понимаю, что страшно. Но чёткая речь экономит минуты, а минуты в нашей работе — это жизни.</li>
+      <li><strong>Дети тоже могут звонить.</strong> Я всегда слушаю внимательно, даже если звонит дошкольник. Научите ребёнка свой адрес и номер телефона — наизусть.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Разговор со мной — потренируйтесь</h2>
+    <p style="margin-bottom:14px; color:#b8b8c8;">Наберите что-нибудь — я отвечу как оператор. Настоящий звонок здесь не произойдёт: для экстренных случаев нажимайте кнопки номеров выше.</p>
+    <div class="chat">
+      <div class="log" id="log">
+        <div class="msg op">Здравствуйте! Я на связи. Что у вас случилось?</div>
+      </div>
+      <input type="text" id="inp" placeholder="Напишите сообщение…" onkeydown="if(event.key==='Enter')send()">
+    </div>
+  </section>
+
+  <section>
+    <div class="greeting">
+      Спасибо, что дочитали. Надеюсь, эти знания вам никогда не пригодятся.
+      Но если пригодятся — вы будете готовы. <em>— Анна, ваша оператор на том конце линии.</em>
+    </div>
+  </section>
+
 </div>
 
 <footer>
-  Сайт-памятка. В экстренной ситуации звоните на указанные номера.
+  В реальной чрезвычайной ситуации звоните <span class="red">112</span> — бесплатно, с любого телефона, даже без SIM-карты.
 </footer>
+
+<script>
+const answers = [
+  { keys: ["пожар", "горит", "дым"], text: "Понял(а), фиксирую. Адрес назовите, пожалуйста: улица, дом, этаж. Не пытайтесь тушить большой огонь сами — сразу выходите и закрывайте за собой дверь." },
+  { keys: ["скорая", "плохо", "болит", "сознание", "сердце", "упал"], text: "Оставайтесь на линии, я подключаю скорую. Человек дышит? Отвечает? Сколько ему лет?" },
+  { keys: ["газ", "пахнет"], text: "Не включайте свет и электроприборы, не зажигайте огонь! Откройте окна и выйдите на улицу. Сейчас соединю с газовой службой." },
+  { keys: ["полиция", "взлом", "вор", "кража", "угроза"], text: "Спокойно, я на связи. Ваш адрес? Что именно происходит и сколько людей на месте?" },
+  { keys: ["привет", "здравствуй"], text: "Здравствуйте! Это учебный чат, я помогу вам потренироваться. Опишите словами ситуацию — как будто звоните мне по-настоящему." },
+  { keys: ["страшно", "боюсь", "помогите"], text: "Я рядом, вы не одни. Дышите глубже и слушайте меня: назовите адрес — и я отправлю помощь." },
+  { keys: ["спасибо"], text: "Не за что. Берегите себя, и пусть этот навык вам не пригодится." }
+];
+function send() {
+  const inp = document.getElementById('inp');
+  const text = inp.value.trim();
+  if (!text) return;
+  inp.value = '';
+  const log = document.getElementById('log');
+  log.insertAdjacentHTML('beforeend', `<div class="msg me">${text.replace(/</g,'&lt;')}</div>`);
+  const low = text.toLowerCase();
+  const found = answers.find(a => a.keys.some(k => low.includes(k)));
+  const reply = found ? found.text
+    : "Хорошо, я вас услышала. Назовите адрес: улица, дом, подъезд — и коротко, что случилось.";
+  setTimeout(() => {
+    log.insertAdjacentHTML('beforeend', `<div class="msg op">${reply}</div>`);
+    log.scrollTop = log.scrollHeight;
+  }, 600);
+  log.scrollTop = log.scrollHeight;
+}
+</script>
 
 </body>
 </html>
