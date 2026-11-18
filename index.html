@@ -3,389 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Пульт оператора 112</title>
+    <title>Ozon Clone</title>
     <style>
         :root {
-            --bg-dark: #121212;
-            --panel-bg: #1e1e2e;
-            --accent-green: #4ade80;
-            --accent-red: #ef4444;
-            --accent-blue: #3b82f6;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
+            --ozon-red: #ff5c00;
+            --ozon-bg: #f0f0f0;
+            --white: #ffffff;
+            --text: #111;
+            --card-bg: #fff;
         }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Arial', sans-serif; }
+        body { background: var(--ozon-bg); color: var(--text); }
+        
+        /* Header */
+        header { background: var(--white); padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .logo { font-size: 24px; font-weight: bold; color: var(--ozon-red); text-transform: uppercase; letter-spacing: 1px; }
+        .search-bar { flex: 1; max-width: 600px; margin: 0 20px; }
+        .search-bar input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 20px; outline: none; }
+        .header-actions button { background: none; border: none; cursor: pointer; font-size: 18px; margin-left: 15px; color: var(--text); }
+        .cart-count { position: relative; }
+        .badge { position: absolute; top: -8px; right: -8px; background: var(--ozon-red); color: white; font-size: 12px; padding: 2px 6px; border-radius: 50%; }
 
-        body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
+        /* Main */
+        main { padding: 20px; max-width: 1200px; margin: 0 auto; }
+        h2 { margin-bottom: 20px; }
+        
+        /* Grid */
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+        .product-card { background: var(--card-bg); padding: 15px; border-radius: 8px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); transition: transform 0.2s; }
+        .product-card:hover { transform: translateY(-5px); }
+        .product-img { width: 150px; height: 150px; background: #eee; margin: 0 auto 15px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #888; }
+        .product-title { font-size: 14px; margin-bottom: 10px; line-height: 1.4; }
+        .price { font-size: 18px; font-weight: bold; color: var(--ozon-red); margin-bottom: 15px; }
+        .btn-add { width: 100%; padding: 10px; background: var(--ozon-red); color: white; border: none; border-radius: 6px; cursor: pointer; }
+        .btn-add:hover { background: #e04500; }
 
-        .operator-panel {
-            background-color: var(--panel-bg);
-            padding: 2rem;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            width: 100%;
-            max-width: 500px;
-            text-align: center;
-        }
-
-        h1 {
-            margin-top: 0;
-            color: var(--accent-green);
-            font-size: 1.5rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .status-bar {
-            margin: 1.5rem 0;
-            padding: 1rem;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .status-free { background-color: rgba(74, 222, 128, 0.15); color: var(--accent-green); }
-        .status-ringing { background-color: rgba(239, 68, 68, 0.15); color: var(--accent-red); animation: pulse 1.5s infinite; }
-        .status-active { background-color: rgba(59, 130, 246, 0.15); color: var(--accent-blue); }
-
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.7; }
-            100% { opacity: 1; }
-        }
-
-        /* Визуализация уровня звука */
-        .audio-level-meter {
-            width: 100%;
-            height: 4px;
-            background: #333;
-            margin-top: 10px;
-            border-radius: 2px;
-            overflow: hidden;
-            display: none; /* Скрыт по умолчанию */
-        }
-        .audio-level-fill {
-            height: 100%;
-            background: var(--accent-green);
-            width: 0%;
-            transition: width 0.1s;
-        }
-
-        .controls-area {
-            display: none; /* Скрыто, пока нет звонка */
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid #333;
-        }
-
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 14px;
-            margin-bottom: 12px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            border: none;
-            border-radius: 8px;
-            color: white;
-            transition: transform 0.1s, opacity 0.2s;
-            text-align: left;
-            padding-left: 16px;
-        }
-
-        .btn:active { transform: scale(0.98); }
-        .btn-end { background-color: var(--accent-red); }
-        .btn-police { background-color: #818cf8; color: #1e1e2e; }
-        .btn-amb { background-color: #6366f1; color: white; }
-
-        .emergency-numbers {
-            margin-top: 20px;
-            padding: 15px;
-            background: #333;
-            border-radius: 8px;
-            text-align: left;
-        }
-
-        .number-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-            font-size: 0.9rem;
-        }
-
-        .number-link {
-            color: var(--accent-green);
-            text-decoration: none;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .number-link:hover { text-decoration: underline; }
-
-        .error-msg {
-            color: var(--accent-red);
-            margin-top: 15px;
-            font-size: 0.9rem;
-            display: none;
-        }
-
-        audio { display: none; } /* Скрываем элемент аудио, но держим в DOM для автовоспроизведения */
+        /* Cart Modal */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; }
+        .modal-content { background: white; padding: 30px; border-radius: 12px; width: 90%; max-width: 500px; }
+        .cart-item { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        .cart-total { font-size: 20px; font-weight: bold; margin-top: 20px; text-align: right; }
+        .btn-checkout { width: 100%; padding: 12px; background: var(--ozon-red); color: white; border: none; border-radius: 6px; margin-top: 15px; font-size: 16px; }
     </style>
 </head>
 <body>
 
-<div class="operator-panel">
-    <h1>📞 Пульт оператора 112</h1>
-    
-    <div id="conn-status" class="text-muted" style="margin-bottom: 10px; font-size: 0.85rem;">Подключение к сети...</div>
-
-    <div id="status-display" class="status-bar status-free">
-        <span id="status-text">Линия свободна</span>
+<header>
+    <div class="logo">OZON CLONE</div>
+    <div class="search-bar">
+        <input type="text" placeholder="Поиск товаров...">
     </div>
-
-    <div class="audio-level-meter" id="level-meter">
-        <div class="audio-level-fill" id="level-fill"></div>
+    <div class="header-actions">
+        <button>Войти</button>
+        <button class="cart-count" id="open-cart">🛒
+            <span class="badge" id="cart-badge">0</span>
+        </button>
     </div>
+</header>
 
-    <audio id="remote-audio" autoplay playsinline></audio>
-
-    <div id="controls-area" class="controls-area">
-        <button class="btn btn-end" onclick="endCall()">🛑 Завершить разговор</button>
-        <button class="btn btn-police" onclick="dialService('police')">🚓 Вызвать полицию</button>
-        <button class="btn btn-amb" onclick="dialService('ambulance')">🚑 Вызвать скорую помощь</button>
+<main>
+    <h2>Популярные товары</h2>
+    <div class="products-grid" id="products-container">
+        <!-- Товары будут добавлены через JS -->
     </div>
+</main>
 
-    <div class="emergency-numbers" id="numbers-block" style="display:none;">
-        <div class="number-row">
-            <span>Полиция (внутренний)</span>
-            <a href="#" class="number-link" id="police-link" onclick="startDial(this.getAttribute('href')); return false;">Не задан</a>
+<!-- Корзина -->
+<div class="modal" id="cart-modal">
+    <div class="modal-content">
+        <h2>Корзина</h2>
+        <div id="cart-items">
+            <p style="color:#888;">Корзина пуста</p>
         </div>
-        <div class="number-row">
-            <span>Скорая помощь (основной)</span>
-            <a href="tel:+79694455378" class="number-link" onclick="startDial(this.getAttribute('href')); return false;">+7 969 445-53-78</a>
-        </div>
-        <div class="number-row">
-            <span>Скорая помощь (резерв)</span>
-            <a href="tel:+7969445537" class="number-link" onclick="startDial(this.getAttribute('href')); return false;">+7 969 445-53-7</a>
-        </div>
+        <div class="cart-total">Итого: <span id="cart-total">0</span> ₽</div>
+        <button class="btn-checkout">Оформить заказ</button>
+        <button onclick="document.getElementById('cart-modal').style.display='none'" style="margin-top:10px; background:none; border:none; cursor:pointer;">Закрыть</button>
     </div>
-
-    <div id="error-display" class="error-msg"></div>
 </div>
 
-<!-- Подключаем PeerJS -->
-<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
-
 <script>
-    // ================= НАСТРОЙКИ =================
-    const OPERATOR_ID = '112'; 
-    // Вставь сюда номер полиции, если он есть. Если нет - оставь пустую строку, кнопка не появится.
-    const POLICE_NUMBER = ''; 
-    
-    let currentCall = null;
-    let audioLevelInterval = null;
-    let isBusy = false; // Флаг занятости вкладки
+    // Данные товаров (имитация базы данных)
+    const products = [
+        { id: 1, title: "Беспроводные наушники", price: 2500, img: "🎧" },
+        { id: 2, title: "Смартфон Pro", price: 35000, img: "📱" },
+        { id: 3, title: "Кофемашина", price: 12000, img: "☕" },
+        { id: 4, title: "Фитнес-браслет", price: 3500, img: "⌚" },
+        { id: 5, title: "Книга: Путь к успеху", price: 800, img: "📚" },
+        { id: 6, title: "Чехол для телефона", price: 500, img: "💼" }
+    ];
 
-    // ================= ИНИЦИАЛИЗАЦИЯ =================
-    function initPeer() {
-        const params = new URLSearchParams(location.search);
-        let signalUrl = params.get('signal') || 'localhost:9000';
-        
-        // Очистка URL для PeerJS
-        signalUrl = signalUrl.replace(/^https?:\/\//, '').replace(/\/\$/, '');
-        const [host, port] = signalUrl.split(':');
+    const container = document.getElementById('products-container');
+    const cart = ;
+    const badge = document.getElementById('cart-badge');
+    const modal = document.getElementById('cart-modal');
+    const cartItemsEl = document.getElementById('cart-items');
+    const totalEl = document.getElementById('cart-total');
 
-        const peer = new Peer(OPERATOR_ID, {
-            host: host,
-            port: Number(port) || 443,
-            secure: true,
-            path: '/',
-            debug: 0 // В продакшене лучше 0, для отладки 3
-        });
+    // Рендер товаров
+    products.forEach(product => {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.innerHTML = `
+            <div class="product-img">\${product.img}</div>
+            <div class="product-title">\${product.title}</div>
+            <div class="price">\${product.price.toLocaleString()} ₽</div>
+            <button class="btn-add" onclick="addToCart(\${product.id})">В корзину</button>
+        `;
+        container.appendChild(card);
+    });
 
-        const connStatusEl = document.getElementById('conn-status');
-        const errorEl = document.getElementById('error-display');
-
-        peer.on('open', (id) => {
-            connStatusEl.textContent = `Подключено к сигнальному серверу (ID: \${id})`;
-            connStatusEl.style.color = '#4ade80';
-        });
-
-        peer.on('error', (err) => {
-            console.error(err);
-            connStatusEl.textContent = 'Ошибка соединения';
-            connStatusEl.style.color = '#ef4444';
-            errorEl.textContent = `Код ошибки: \${err.type}. Проверьте сигнальный сервер.`;
-            errorEl.style.display = 'block';
-            
-            if (err.type === 'unavailable-id') {
-                errorEl.textContent += ' Внимание: Оператор 112 уже активен в другой вкладке! Закройте лишние окна.';
-            }
-        });
-
-        peer.on('call', (call) => {
-            // Защита: если линия уже занята в этой вкладке
-            if (isBusy) {
-                call.close();
-                console.warn('Отклонено: линия занята в этой вкладке');
-                return;
-            }
-            
-            isBusy = true;
-            currentCall = call;
-            
-            updateStatus('ringing', 'Входящий вызов... Автоответ через 1 сек');
-            
-            // Автоответ через 1 секунду (чтобы успеть показать статус)
-            setTimeout(() => {
-                if (isBusy && currentCall) {
-                    call.answer();
-                    setupCall(call);
-                }
-            }, 1000);
-        });
+    // Логика корзины
+    function addToCart(id) {
+        const product = products.find(p => p.id === id);
+        cart.push(product);
+        updateCartUI();
     }
 
-    // ================= ЛОГИКА ЗВОНКА =================
-    function setupCall(call) {
-        updateStatus('active', 'Разговор идет');
-        document.getElementById('controls-area').style.display = 'block';
-        document.getElementById('numbers-block').style.display = 'block';
+    function updateCartUI() {
+        badge.textContent = cart.length;
+        cartItemsEl.innerHTML = '';
+        let total = 0;
 
-        // Настройка аудио
-        call.on('stream', (stream) => {
-            const audio = document.getElementById('remote-audio');
-            audio.srcObject = stream;
-            startAudioLevelMonitor(stream);
-        });
-
-        call.on('close', () => resetLine());
-        call.on('error', (e) => {
-            console.error('Call error:', e);
-            resetLine();
-        });
-    }
-
-    function endCall() {
-        if (currentCall) {
-            currentCall.close();
-        }
-        resetLine();
-    }
-
-    function resetLine() {
-        isBusy = false;
-        currentCall = null;
-        
-        const audio = document.getElementById('remote-audio');
-        if (audio.srcObject) {
-            audio.srcObject.getTracks().forEach(track => track.stop());
-            audio.srcObject = null;
-        }
-        
-        stopAudioLevelMonitor();
-        updateStatus('free', 'Линия свободна');
-        document.getElementById('controls-area').style.display = 'none';
-        document.getElementById('level-meter').style.display = 'none';
-    }
-
-    function updateStatus(type, text) {
-        const statusEl = document.getElementById('status-display');
-        const textEl = document.getElementById('status-text');
-        const meter = document.getElementById('level-meter');
-
-        statusEl.className = `status-bar status-\${type}`;
-        textEl.textContent = text;
-
-        if (type === 'active') {
-            meter.style.display = 'block';
+        if (cart.length === 0) {
+            cartItemsEl.innerHTML = '<p style="color:#888;">Корзина пуста</p>';
         } else {
-            meter.style.display = 'none';
+            cart.forEach((item, index) => {
+                total += item.price;
+                const div = document.createElement('div');
+                div.className = 'cart-item';
+                div.innerHTML = `
+                    <span>\${item.title}</span>
+                    <span>${item.price.toLocaleString()} ₽ <button onclick="removeFromCart(${index})" style="color:red; border:none; background:none; cursor:pointer;">✕</button></span>
+                `;
+                cartItemsEl.appendChild(div);
+            });
+            totalEl.textContent = total.toLocaleString();
         }
     }
 
-    // ================= УРОВЕНЬ ЗВУКА (AUDIO LEVEL) =================
-    function startAudioLevelMonitor(stream) {
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const source = audioCtx.createMediaStreamSource(stream);
-        const analyser = audioCtx.createAnalyser();
-        
-        source.connect(analyser);
-        analyser.fftSize = 256;
-        const bufferLength = analyser.frequencyBinCount;
-        const dataArray = new Uint8Array(bufferLength);
-
-        const fillEl = document.getElementById('level-fill');
-
-        function updateLevel() {
-            analyser.getByteTimeDomainData(dataArray);
-            let sum = 0;
-            for (let i = 0; i < bufferLength; i++) sum += dataArray[i];
-            const avg = sum / bufferLength;
-            
-            // Масштабируем от 0 до 100%
-            const level = Math.min(avg * 1.5, 100); 
-            fillEl.style.width = level + '%';
-            
-            if (audioLevelInterval) requestAnimationFrame(updateLevel);
-        }
-
-        audioLevelInterval = true;
-        updateLevel();
+    function removeFromCart(index) {
+        cart.splice(index, 1);
+        updateCartUI();
     }
 
-    function stopAudioLevelMonitor() {
-        audioLevelInterval = null;
-        document.getElementById('level-fill').style.width = '0%';
-    }
-
-    // ================= ВЫЗОВ ВНЕШНИХ СЛУЖБ =================
-    function dialService(service) {
-        const block = document.getElementById('numbers-block');
-        block.style.display = 'block'; // Показываем блок с номерами
-        
-        // Прокрутка к блоку (для мобильных)
-        block.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
-
-    function startDial(href) {
-        if (!href || href === '#') {
-            alert('Номер не настроен!');
-            return;
-        }
-        // Эмуляция клика для запуска нативного звонилки
-        const a = document.createElement('a');
-        a.href = href;
-        a.click();
-    }
-
-    // ================= ЗАГРУЗКА =================
-    // Проверка на дубликат вкладки (простая проверка через sessionStorage)
-    const isDuplicate = sessionStorage.getItem('operator_112_active');
-    if (isDuplicate) {
-        document.getElementById('error-display').textContent = 'Ошибка: Оператор 112 уже запущен в другой вкладке этого браузера. Закройте лишние окна.';
-        document.getElementById('error-display').style.display = 'block';
-    } else {
-        sessionStorage.setItem('operator_112_active', 'true');
-        window.addEventListener('unload', () => {
-            sessionStorage.removeItem('operator_112_active');
-        });
-        initPeer();
-    }
-
+    // Открытие корзины
+    document.getElementById('open-cart').addEventListener('click', () => {
+        modal.style.display = 'flex';
+    });
 </script>
+
 </body>
 </html>
