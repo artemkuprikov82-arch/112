@@ -1,260 +1,391 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Оператор Зинченко А.А. — прямая линия</title>
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: 'Consolas', 'Segoe UI', monospace;
-    background: #0a0e14;
-    color: #d8e0e8;
-    line-height: 1.6;
-  }
-  .topbar {
-    background: #11161f;
-    border-bottom: 2px solid #e94560;
-    padding: 14px 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-  .topbar .id { font-weight: bold; letter-spacing: 2px; }
-  .topbar .id span { color: #e94560; }
-  .status {
-    display: flex; align-items: center; gap: 8px;
-    font-size: 0.85rem; letter-spacing: 1px;
-  }
-  .dot {
-    width: 10px; height: 10px; border-radius: 50%;
-    background: #2ecc71;
-    animation: pulse 1.5s infinite;
-  }
-  @keyframes pulse {
-    0%,100% { box-shadow: 0 0 0 0 rgba(46,204,113,0.5); }
-    50% { box-shadow: 0 0 0 8px rgba(46,204,113,0); }
-  }
-  .clock { font-size: 0.85rem; color: #8fa3b8; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пульт оператора 112</title>
+    <style>
+        :root {
+            --bg-dark: #121212;
+            --panel-bg: #1e1e2e;
+            --accent-green: #4ade80;
+            --accent-red: #ef4444;
+            --accent-blue: #3b82f6;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
 
-  .wrap { max-width: 960px; margin: 0 auto; padding: 30px 20px; }
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
 
-  .panel {
-    background: #11161f;
-    border: 1px solid #1f2a38;
-    border-radius: 10px;
-    padding: 22px;
-    margin-bottom: 28px;
-  }
-  .panel h2 {
-    color: #e94560;
-    font-size: 1.05rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 14px;
-    border-bottom: 1px dashed #2a3646;
-    padding-bottom: 8px;
-  }
+        .operator-panel {
+            background-color: var(--panel-bg);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
 
-  .operator-card {
-    display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap;
-  }
-  .operator-info { flex: 1; min-width: 260px; }
-  .operator-info .name { font-size: 1.5rem; font-weight: bold; color: #fff; }
-  .operator-info .role { color: #8fa3b8; margin-bottom: 12px; }
-  .operator-info p { font-size: 0.95rem; color: #b8c4d2; }
-  .operator-info em { color: #ffd9dc; }
+        h1 {
+            margin-top: 0;
+            color: var(--accent-green);
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
 
-  .direct {
-    display: inline-block;
-    background: #e94560;
-    color: #fff;
-    padding: 14px 36px;
-    border-radius: 8px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    text-decoration: none;
-    font-family: inherit;
-    box-shadow: 0 0 18px rgba(233,69,96,0.4);
-    transition: box-shadow 0.2s, background 0.2s;
-  }
-  .direct:hover { background: #ff5c77; box-shadow: 0 0 28px rgba(233,69,96,0.7); }
-  .direct small { display: block; font-weight: normal; font-size: 0.75rem; opacity: 0.85; }
+        .status-bar {
+            margin: 1.5rem 0;
+            padding: 1rem;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
 
-  table.channels { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
-  table.channels td { padding: 10px 12px; border-bottom: 1px solid #1f2a38; }
-  table.channels a {
-    color: #fff; background: #1d2b3a;
-    padding: 5px 18px; border-radius: 6px;
-    text-decoration: none; border: 1px solid #2a3646;
-  }
-  table.channels a:hover { background: #e94560; border-color: #e94560; }
-  table.channels .num { color: #e94560; font-weight: bold; font-size: 1.1rem; }
+        .status-free { background-color: rgba(74, 222, 128, 0.15); color: var(--accent-green); }
+        .status-ringing { background-color: rgba(239, 68, 68, 0.15); color: var(--accent-red); animation: pulse 1.5s infinite; }
+        .status-active { background-color: rgba(59, 130, 246, 0.15); color: var(--accent-blue); }
 
-  ul.advice li { margin: 8px 0 8px 20px; }
-  ul.advice li::marker { color: #e94560; }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
 
-  .console-log {
-    background: #0d1219;
-    border: 1px solid #1f2a38;
-    border-radius: 8px;
-    padding: 16px;
-    height: 280px;
-    overflow-y: auto;
-    display: flex; flex-direction: column; gap: 8px;
-    margin-bottom: 12px;
-  }
-  .line { font-size: 0.92rem; }
-  .line .time { color: #55677d; margin-right: 8px; }
-  .line.caller { color: #9fc2e8; }
-  .line.duty { color: #ff8fa0; }
-  .line.sys { color: #55677d; font-style: italic; }
-  .input-row { display: flex; gap: 8px; }
-  .input-row input {
-    flex: 1;
-    padding: 12px;
-    background: #0d1219;
-    border: 1px solid #2a3646;
-    color: #d8e0e8;
-    border-radius: 6px;
-    font-family: inherit;
-    font-size: 1rem;
-  }
-  .input-row button {
-    padding: 12px 26px;
-    background: #e94560;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    font-family: inherit;
-    font-weight: bold;
-    cursor: pointer;
-  }
+        /* Визуализация уровня звука */
+        .audio-level-meter {
+            width: 100%;
+            height: 4px;
+            background: #333;
+            margin-top: 10px;
+            border-radius: 2px;
+            overflow: hidden;
+            display: none; /* Скрыт по умолчанию */
+        }
+        .audio-level-fill {
+            height: 100%;
+            background: var(--accent-green);
+            width: 0%;
+            transition: width 0.1s;
+        }
 
-  .note { color: #55677d; font-size: 0.85rem; margin-top: 10px; }
-  .note b { color: #e94560; }
+        .controls-area {
+            display: none; /* Скрыто, пока нет звонка */
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+        }
 
-  footer {
-    text-align: center;
-    padding: 26px 20px;
-    color: #55677d;
-    font-size: 0.85rem;
-    border-top: 1px solid #1f2a38;
-  }
-  footer .red { color: #e94560; font-weight: bold; }
-</style>
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            transition: transform 0.1s, opacity 0.2s;
+            text-align: left;
+            padding-left: 16px;
+        }
+
+        .btn:active { transform: scale(0.98); }
+        .btn-end { background-color: var(--accent-red); }
+        .btn-police { background-color: #818cf8; color: #1e1e2e; }
+        .btn-amb { background-color: #6366f1; color: white; }
+
+        .emergency-numbers {
+            margin-top: 20px;
+            padding: 15px;
+            background: #333;
+            border-radius: 8px;
+            text-align: left;
+        }
+
+        .number-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .number-link {
+            color: var(--accent-green);
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .number-link:hover { text-decoration: underline; }
+
+        .error-msg {
+            color: var(--accent-red);
+            margin-top: 15px;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        audio { display: none; } /* Скрываем элемент аудио, но держим в DOM для автовоспроизведения */
+    </style>
 </head>
 <body>
 
-<div class="topbar">
-  <div class="id">ЛИНИЯ ПРИЁМА ОБРАЩЕНИЙ <span>· ОПЕРАТОР НА МЕСТЕ</span></div>
-  <div class="status"><span class="dot"></span> НА СВЯЗИ</div>
-  <div class="clock" id="clock"></div>
+<div class="operator-panel">
+    <h1>📞 Пульт оператора 112</h1>
+    
+    <div id="conn-status" class="text-muted" style="margin-bottom: 10px; font-size: 0.85rem;">Подключение к сети...</div>
+
+    <div id="status-display" class="status-bar status-free">
+        <span id="status-text">Линия свободна</span>
+    </div>
+
+    <div class="audio-level-meter" id="level-meter">
+        <div class="audio-level-fill" id="level-fill"></div>
+    </div>
+
+    <audio id="remote-audio" autoplay playsinline></audio>
+
+    <div id="controls-area" class="controls-area">
+        <button class="btn btn-end" onclick="endCall()">🛑 Завершить разговор</button>
+        <button class="btn btn-police" onclick="dialService('police')">🚓 Вызвать полицию</button>
+        <button class="btn btn-amb" onclick="dialService('ambulance')">🚑 Вызвать скорую помощь</button>
+    </div>
+
+    <div class="emergency-numbers" id="numbers-block" style="display:none;">
+        <div class="number-row">
+            <span>Полиция (внутренний)</span>
+            <a href="#" class="number-link" id="police-link" onclick="startDial(this.getAttribute('href')); return false;">Не задан</a>
+        </div>
+        <div class="number-row">
+            <span>Скорая помощь (основной)</span>
+            <a href="tel:+79694455378" class="number-link" onclick="startDial(this.getAttribute('href')); return false;">+7 969 445-53-78</a>
+        </div>
+        <div class="number-row">
+            <span>Скорая помощь (резерв)</span>
+            <a href="tel:+7969445537" class="number-link" onclick="startDial(this.getAttribute('href')); return false;">+7 969 445-53-7</a>
+        </div>
+    </div>
+
+    <div id="error-display" class="error-msg"></div>
 </div>
 
-<div class="wrap">
-
-  <div class="panel">
-    <h2>Оператор линии</h2>
-    <div class="operator-card">
-      <div class="operator-info">
-        <div class="name">Зинченко А.А.</div>
-        <div class="role">оператор приёма обращений</div>
-        <p>
-          Здравствуйте. Меня зовут Александр, по документам — Зинченко А.А.
-          Я принимаю обращения на своей личной линии: выслушаю, подскажу,
-          куда и как действовать. Работаю так, как учат диспетчеров: сначала
-          адрес, потом суть, потом — порядок действий.
-          <em>Если ситуация экстренная — не ждите, звоните 112 или на номера
-          из таблицы ниже. Моя линия — для обращений и консультаций.</em>
-        </p>
-      </div>
-      <div>
-        <a class="direct" href="tel:+79939355378">
-          📞 ПРЯМАЯ ЛИНИЯ ОПЕРАТОРА
-          <small>+7 993 935-53-78 — нажмите для вызова</small>
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <div class="panel">
-    <h2>Экстренные каналы (гос. службы)</h2>
-    <table class="channels">
-      <tr><td>Единая служба — работает везде и без SIM</td><td class="num">112</td><td><a href="tel:112">вызов</a></td></tr>
-      <tr><td>Пожарная охрана</td><td class="num">101</td><td><a href="tel:101">вызов</a></td></tr>
-      <tr><td>Полиция</td><td class="num">102</td><td><a href="tel:102">вызов</a></td></tr>
-      <tr><td>Скорая помощь</td><td class="num">103</td><td><a href="tel:103">вызов</a></td></tr>
-      <tr><td>Газовая служба</td><td class="num">104</td><td><a href="tel:104">вызов</a></td></tr>
-    </table>
-  </div>
-
-  <div class="panel">
-    <h2>Как я принимаю обращение</h2>
-    <ul class="advice">
-      <li><strong>Адрес — первым.</strong> Улица, дом, подъезд, этаж. Если связь оборвётся — помощь уже знает, куда ехать.</li>
-      <li><strong>Суть — одной фразой.</strong> «Человеку плохо, без сознания» — этого достаточно, дальше вопросы задаю я.</li>
-      <li><strong>Трубку не бросаем.</strong> Пока я не скажу «принято» или «можно закрывать», линия остаётся открытой.</li>
-      <li><strong>Спокойно и по порядку.</strong> Страх — это нормально. Но чёткая речь экономит минуты.</li>
-    </ul>
-  </div>
-
-  <div class="panel">
-    <h2>Канал обращений — демо-режим</h2>
-    <div class="console-log" id="log">
-      <div class="line sys">[система] канал открыт. Оператор: Зинченко А.А.</div>
-      <div class="line duty">[Зинченко А.А.] На связи. Назовите адрес и суть обращения.</div>
-    </div>
-    <div class="input-row">
-      <input type="text" id="inp" placeholder="Введите обращение…" onkeydown="if(event.key==='Enter')send()">
-      <button onclick="send()">ПЕРЕДАТЬ</button>
-    </div>
-    <p class="note"><b>Демо:</b> автоматические ответы работают, пока я не на линии. Реальный звонок ко мне — кнопка «Прямая линия оператора» выше.</p>
-  </div>
-
-</div>
-
-<footer>
-  Оператор Зинченко А.А. · прямая линия: +7 993 935-53-78 ·
-  Экстренные вызовы: <span class="red">112 / 101 / 102 / 103 / 104</span>
-</footer>
+<!-- Подключаем PeerJS -->
+<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 
 <script>
-setInterval(() => {
-  document.getElementById('clock').textContent =
-    new Date().toLocaleTimeString('ru-RU');
-}, 1000);
+    // ================= НАСТРОЙКИ =================
+    const OPERATOR_ID = '112'; 
+    // Вставь сюда номер полиции, если он есть. Если нет - оставь пустую строку, кнопка не появится.
+    const POLICE_NUMBER = ''; 
+    
+    let currentCall = null;
+    let audioLevelInterval = null;
+    let isBusy = false; // Флаг занятости вкладки
 
-const replies = [
-  { keys: ["пожар", "горит", "дым"], text: "Принял. Адрес: улица, дом, этаж — по порядку. Крупное возгорание не тушите сами, выводите людей и звоните 101." },
-  { keys: ["скорая", "плохо", "болит", "сознание", "сердце"], text: "Фиксирую. Дышит? В сознании? Возраст? Если критично — сразу 103, я объясню, что говорить." },
-  { keys: ["газ", "пахнет"], text: "Свет и электроприборы не трогать, открытого огня нет. Окна открыть, выйти из помещения. Канал 104 — параллельно." },
-  { keys: ["полиция", "взлом", "вор", "кража"], text: "Спокойно. Адрес, что происходит, сколько человек на месте. Параллельно — 102, не ждите меня." },
-  { keys: ["страшно", "помогите"], text: "Вы меня слышите, я на связи. Дышите ровно. Первое — адрес. Второе — что случилось. Действуем по порядку." },
-  { keys: ["спасибо"], text: "Принято. Канал свободен. Берегите себя." }
-];
-function now() { return new Date().toLocaleTimeString('ru-RU'); }
-function addLine(cls, who, text) {
-  document.getElementById('log').insertAdjacentHTML('beforeend',
-    `<div class="line ${cls}"><span class="time">[${now()}]</span>${who ? '['+who+'] ' : ''}${text}</div>`);
-  const log = document.getElementById('log');
-  log.scrollTop = log.scrollHeight;
-}
-function send() {
-  const inp = document.getElementById('inp');
-  const text = inp.value.trim();
-  if (!text) return;
-  inp.value = '';
-  addLine('caller', 'Вызывающий', text.replace(/</g,'&lt;'));
-  const low = text.toLowerCase();
-  const hit = replies.find(r => r.keys.some(k => low.includes(k)));
-  const reply = hit ? hit.text
-    : "Принял. Уточните адрес: улица, дом, подъезд — и суть обращения одной фразой.";
-  setTimeout(() => addLine('duty', 'Зинченко А.А.', reply), 700);
-}
+    // ================= ИНИЦИАЛИЗАЦИЯ =================
+    function initPeer() {
+        const params = new URLSearchParams(location.search);
+        let signalUrl = params.get('signal') || 'localhost:9000';
+        
+        // Очистка URL для PeerJS
+        signalUrl = signalUrl.replace(/^https?:\/\//, '').replace(/\/\$/, '');
+        const [host, port] = signalUrl.split(':');
+
+        const peer = new Peer(OPERATOR_ID, {
+            host: host,
+            port: Number(port) || 443,
+            secure: true,
+            path: '/',
+            debug: 0 // В продакшене лучше 0, для отладки 3
+        });
+
+        const connStatusEl = document.getElementById('conn-status');
+        const errorEl = document.getElementById('error-display');
+
+        peer.on('open', (id) => {
+            connStatusEl.textContent = `Подключено к сигнальному серверу (ID: \${id})`;
+            connStatusEl.style.color = '#4ade80';
+        });
+
+        peer.on('error', (err) => {
+            console.error(err);
+            connStatusEl.textContent = 'Ошибка соединения';
+            connStatusEl.style.color = '#ef4444';
+            errorEl.textContent = `Код ошибки: \${err.type}. Проверьте сигнальный сервер.`;
+            errorEl.style.display = 'block';
+            
+            if (err.type === 'unavailable-id') {
+                errorEl.textContent += ' Внимание: Оператор 112 уже активен в другой вкладке! Закройте лишние окна.';
+            }
+        });
+
+        peer.on('call', (call) => {
+            // Защита: если линия уже занята в этой вкладке
+            if (isBusy) {
+                call.close();
+                console.warn('Отклонено: линия занята в этой вкладке');
+                return;
+            }
+            
+            isBusy = true;
+            currentCall = call;
+            
+            updateStatus('ringing', 'Входящий вызов... Автоответ через 1 сек');
+            
+            // Автоответ через 1 секунду (чтобы успеть показать статус)
+            setTimeout(() => {
+                if (isBusy && currentCall) {
+                    call.answer();
+                    setupCall(call);
+                }
+            }, 1000);
+        });
+    }
+
+    // ================= ЛОГИКА ЗВОНКА =================
+    function setupCall(call) {
+        updateStatus('active', 'Разговор идет');
+        document.getElementById('controls-area').style.display = 'block';
+        document.getElementById('numbers-block').style.display = 'block';
+
+        // Настройка аудио
+        call.on('stream', (stream) => {
+            const audio = document.getElementById('remote-audio');
+            audio.srcObject = stream;
+            startAudioLevelMonitor(stream);
+        });
+
+        call.on('close', () => resetLine());
+        call.on('error', (e) => {
+            console.error('Call error:', e);
+            resetLine();
+        });
+    }
+
+    function endCall() {
+        if (currentCall) {
+            currentCall.close();
+        }
+        resetLine();
+    }
+
+    function resetLine() {
+        isBusy = false;
+        currentCall = null;
+        
+        const audio = document.getElementById('remote-audio');
+        if (audio.srcObject) {
+            audio.srcObject.getTracks().forEach(track => track.stop());
+            audio.srcObject = null;
+        }
+        
+        stopAudioLevelMonitor();
+        updateStatus('free', 'Линия свободна');
+        document.getElementById('controls-area').style.display = 'none';
+        document.getElementById('level-meter').style.display = 'none';
+    }
+
+    function updateStatus(type, text) {
+        const statusEl = document.getElementById('status-display');
+        const textEl = document.getElementById('status-text');
+        const meter = document.getElementById('level-meter');
+
+        statusEl.className = `status-bar status-\${type}`;
+        textEl.textContent = text;
+
+        if (type === 'active') {
+            meter.style.display = 'block';
+        } else {
+            meter.style.display = 'none';
+        }
+    }
+
+    // ================= УРОВЕНЬ ЗВУКА (AUDIO LEVEL) =================
+    function startAudioLevelMonitor(stream) {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const source = audioCtx.createMediaStreamSource(stream);
+        const analyser = audioCtx.createAnalyser();
+        
+        source.connect(analyser);
+        analyser.fftSize = 256;
+        const bufferLength = analyser.frequencyBinCount;
+        const dataArray = new Uint8Array(bufferLength);
+
+        const fillEl = document.getElementById('level-fill');
+
+        function updateLevel() {
+            analyser.getByteTimeDomainData(dataArray);
+            let sum = 0;
+            for (let i = 0; i < bufferLength; i++) sum += dataArray[i];
+            const avg = sum / bufferLength;
+            
+            // Масштабируем от 0 до 100%
+            const level = Math.min(avg * 1.5, 100); 
+            fillEl.style.width = level + '%';
+            
+            if (audioLevelInterval) requestAnimationFrame(updateLevel);
+        }
+
+        audioLevelInterval = true;
+        updateLevel();
+    }
+
+    function stopAudioLevelMonitor() {
+        audioLevelInterval = null;
+        document.getElementById('level-fill').style.width = '0%';
+    }
+
+    // ================= ВЫЗОВ ВНЕШНИХ СЛУЖБ =================
+    function dialService(service) {
+        const block = document.getElementById('numbers-block');
+        block.style.display = 'block'; // Показываем блок с номерами
+        
+        // Прокрутка к блоку (для мобильных)
+        block.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function startDial(href) {
+        if (!href || href === '#') {
+            alert('Номер не настроен!');
+            return;
+        }
+        // Эмуляция клика для запуска нативного звонилки
+        const a = document.createElement('a');
+        a.href = href;
+        a.click();
+    }
+
+    // ================= ЗАГРУЗКА =================
+    // Проверка на дубликат вкладки (простая проверка через sessionStorage)
+    const isDuplicate = sessionStorage.getItem('operator_112_active');
+    if (isDuplicate) {
+        document.getElementById('error-display').textContent = 'Ошибка: Оператор 112 уже запущен в другой вкладке этого браузера. Закройте лишние окна.';
+        document.getElementById('error-display').style.display = 'block';
+    } else {
+        sessionStorage.setItem('operator_112_active', 'true');
+        window.addEventListener('unload', () => {
+            sessionStorage.removeItem('operator_112_active');
+        });
+        initPeer();
+    }
+
 </script>
-
 </body>
 </html>
