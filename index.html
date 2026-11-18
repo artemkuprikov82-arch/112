@@ -3,253 +3,249 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Служба 911 — на связи оператор Анна</title>
+<title>Диспетчерская — дежурный Зинченко А.А.</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background: #10131a;
-    color: #e8e8f0;
+    font-family: 'Consolas', 'Segoe UI', monospace;
+    background: #0a0e14;
+    color: #d8e0e8;
     line-height: 1.6;
   }
-  header {
-    background: linear-gradient(135deg, #b3121f, #6d0f18);
-    padding: 50px 20px 40px;
-    text-align: center;
-  }
-  header .badge {
-    display: inline-block;
-    background: rgba(255,255,255,0.15);
-    padding: 6px 18px;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    letter-spacing: 1px;
-    margin-bottom: 16px;
-  }
-  header h1 { font-size: 2.4rem; }
-  header p.sub { margin-top: 10px; color: #ffd9dc; font-size: 1.1rem; }
-
-  .wrap { max-width: 900px; margin: 0 auto; padding: 30px 20px; }
-
-  section { margin-bottom: 45px; }
-  h2 {
-    font-size: 1.5rem;
-    color: #ff6b6b;
-    margin-bottom: 14px;
-    border-left: 4px solid #e94560;
-    padding-left: 12px;
-  }
-
-  .greeting {
-    background: rgba(255,255,255,0.05);
-    border-radius: 14px;
-    padding: 24px;
-    font-size: 1.05rem;
-  }
-  .greeting em { color: #ffd9dc; }
-
-  .numbers {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 14px;
-  }
-  .n {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 12px;
-    padding: 18px;
-    text-align: center;
-  }
-  .n strong { display: block; font-size: 1.8rem; color: #ff6b6b; }
-  .n span { font-size: 0.95rem; color: #b8b8c8; }
-  .n a {
-    display: inline-block;
-    margin-top: 8px;
-    color: #fff;
-    background: #e94560;
-    padding: 8px 24px;
-    border-radius: 30px;
-    text-decoration: none;
-    font-weight: bold;
-  }
-
-  ul.advice li { margin: 10px 0 10px 20px; }
-  ul.advice li::marker { color: #e94560; }
-
-  /* Кнопка личного номера */
-  .callbtn {
-    display: inline-block;
-    background: #e94560;
-    color: #fff;
-    padding: 14px 40px;
-    border-radius: 40px;
-    font-size: 1.4rem;
-    font-weight: bold;
-    text-decoration: none;
-    transition: background 0.2s;
-  }
-  .callbtn:hover { background: #ff6b81; }
-
-  /* Мини-чат */
-  .chat {
-    background: rgba(255,255,255,0.05);
-    border-radius: 14px;
-    padding: 20px;
-    max-width: 560px;
-  }
-  .chat .log {
-    max-height: 260px;
-    overflow-y: auto;
+  /* Верхняя панель как в диспетчерской */
+  .topbar {
+    background: #11161f;
+    border-bottom: 2px solid #e94560;
+    padding: 14px 24px;
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
     gap: 10px;
-    margin-bottom: 14px;
   }
-  .msg {
-    max-width: 80%;
-    padding: 10px 14px;
-    border-radius: 14px;
-    font-size: 0.95rem;
+  .topbar .id { font-weight: bold; letter-spacing: 2px; }
+  .topbar .id span { color: #e94560; }
+  .status {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.85rem; letter-spacing: 1px;
   }
-  .msg.me { align-self: flex-end; background: #2b3a67; }
-  .msg.op { align-self: flex-start; background: #7a1220; }
-  .chat input {
-    width: 100%;
-    padding: 12px;
+  .dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: #2ecc71;
+    animation: pulse 1.5s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { box-shadow: 0 0 0 0 rgba(46,204,113,0.5); }
+    50% { box-shadow: 0 0 0 8px rgba(46,204,113,0); }
+  }
+  .clock { font-size: 0.85rem; color: #8fa3b8; }
+
+  .wrap { max-width: 960px; margin: 0 auto; padding: 30px 20px; }
+
+  .panel {
+    background: #11161f;
+    border: 1px solid #1f2a38;
     border-radius: 10px;
-    border: 1px solid rgba(255,255,255,0.2);
-    background: rgba(255,255,255,0.08);
+    padding: 22px;
+    margin-bottom: 28px;
+  }
+  .panel h2 {
+    color: #e94560;
+    font-size: 1.05rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    border-bottom: 1px dashed #2a3646;
+    padding-bottom: 8px;
+  }
+
+  /* Бейдж дежурного */
+  .badge-line {
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  }
+  .operator-badge {
+    background: #16202c;
+    border: 1px solid #2a3646;
+    border-left: 4px solid #e94560;
+    border-radius: 8px;
+    padding: 14px 20px;
+  }
+  .operator-badge .name { font-size: 1.3rem; font-weight: bold; color: #fff; }
+  .operator-badge .role { color: #8fa3b8; font-size: 0.9rem; }
+
+  /* Кнопка прямой линии */
+  .direct {
+    display: inline-block;
+    background: #e94560;
     color: #fff;
+    padding: 14px 36px;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-decoration: none;
+    font-family: inherit;
+    box-shadow: 0 0 18px rgba(233,69,96,0.4);
+    transition: box-shadow 0.2s, background 0.2s;
+  }
+  .direct:hover { background: #ff5c77; box-shadow: 0 0 28px rgba(233,69,96,0.7); }
+  .direct small { display: block; font-weight: normal; font-size: 0.75rem; opacity: 0.85; }
+
+  /* Таблица каналов */
+  table.channels { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+  table.channels td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #1f2a38;
+  }
+  table.channels a {
+    color: #fff; background: #1d2b3a;
+    padding: 5px 18px; border-radius: 6px;
+    text-decoration: none; border: 1px solid #2a3646;
+  }
+  table.channels a:hover { background: #e94560; border-color: #e94560; }
+  table.channels .num { color: #e94560; font-weight: bold; font-size: 1.1rem; }
+
+  /* Журнал вызовов (чат) */
+  .console-log {
+    background: #0d1219;
+    border: 1px solid #1f2a38;
+    border-radius: 8px;
+    padding: 16px;
+    height: 280px;
+    overflow-y: auto;
+    display: flex; flex-direction: column; gap: 8px;
+    margin-bottom: 12px;
+  }
+  .line { font-size: 0.92rem; }
+  .line .time { color: #55677d; margin-right: 8px; }
+  .line.caller { color: #9fc2e8; }
+  .line.duty { color: #ff8fa0; }
+  .line.sys { color: #55677d; font-style: italic; }
+  .input-row { display: flex; gap: 8px; }
+  .input-row input {
+    flex: 1;
+    padding: 12px;
+    background: #0d1219;
+    border: 1px solid #2a3646;
+    color: #d8e0e8;
+    border-radius: 6px;
+    font-family: inherit;
     font-size: 1rem;
   }
+  .input-row button {
+    padding: 12px 26px;
+    background: #e94560;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-family: inherit;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .note { color: #55677d; font-size: 0.85rem; margin-top: 10px; }
+  .note b { color: #e94560; }
 
   footer {
     text-align: center;
-    padding: 30px 20px;
-    color: #7c7c90;
-    font-size: 0.9rem;
-    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 26px 20px;
+    color: #55677d;
+    font-size: 0.85rem;
+    border-top: 1px solid #1f2a38;
   }
-  footer .red { color: #ff6b6b; font-weight: bold; }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="badge">СЛУЖБА СПАСЕНИЯ 911 · НА СВЯЗИ 24/7</div>
-  <h1>Здравствуйте, я Анна</h1>
-  <p class="sub">Оператор горячей линии. Стаж — 7 лет. Я та, кто ответит вам в трудную минуту.</p>
-</header>
+<div class="topbar">
+  <div class="id">ДИСПЕТЧЕРСКАЯ <span>· ЛИНИЯ ПРИЁМА ОБРАЩЕНИЙ</span></div>
+  <div class="status"><span class="dot"></span> ДЕЖУРНЫЙ НА ЛИНИИ</div>
+  <div class="clock" id="clock"></div>
+</div>
 
 <div class="wrap">
 
-  <section>
-    <div class="greeting">
-      Каждый день я принимаю десятки звонков: кому-то нужна скорая, у кого-то
-      пожар в соседнем подъезде, кто-то просто растерялся и не знает, куда
-      звонить. Я хочу, чтобы вы знали: <em>не бывает глупых звонков</em> —
-      бывают ситуации, где секунды решают всё. Ниже — то, что я советую
-      каждому. И маленький чат, где вы можете «потренироваться» в диалоге со мной.
+  <div class="panel">
+    <h2>Дежурный смены</h2>
+    <div class="badge-line">
+      <div class="operator-badge">
+        <div class="name">Зинченко А.А.</div>
+        <div class="role">оператор приёма обращений · личная линия</div>
+      </div>
+      <a class="direct" href="tel:+79939355378">
+        📞 ПРЯМАЯ ЛИНИЯ ДЕЖУРНОГО
+        <small>+7 993 935-53-78 — нажмите для вызова</small>
+      </a>
     </div>
-  </section>
-
-  <section>
-    <h2>Позвонить мне напрямую</h2>
-    <p style="margin-bottom:16px; color:#b8b8c8;">
-      Это личная линия проекта, а не государственная экстренная служба.
-      В критической ситуации — пожар, скорая, полиция, запах газа —
-      звоните на номера из списка ниже.
+    <p class="note">
+      <b>Важно:</b> это личная линия приёма обращений, а не государственная
+      экстренная служба. При пожаре, угрозе жизни, crime в процессе — звоните
+      112 или по каналам ниже.
     </p>
-    <a class="callbtn" href="tel:+79939355378">📞 +7 993 935-53-78</a>
-  </section>
+  </div>
 
-  <section>
-    <h2>Экстренные номера</h2>
-    <div class="numbers">
-      <div class="n">
-        <strong>112</strong><span>единый номер, работает везде и без SIM-карты</span>
-        <a href="tel:112">Позвонить</a>
-      </div>
-      <div class="n">
-        <strong>101</strong><span>пожарная охрана</span>
-        <a href="tel:101">Позвонить</a>
-      </div>
-      <div class="n">
-        <strong>102</strong><span>полиция</span>
-        <a href="tel:102">Позвонить</a>
-      </div>
-      <div class="n">
-        <strong>103</strong><span>скорая помощь</span>
-        <a href="tel:103">Позвонить</a>
-      </div>
-      <div class="n">
-        <strong>104</strong><span>газовая служба</span>
-        <a href="tel:104">Позвонить</a>
-      </div>
+  <div class="panel">
+    <h2>Экстренные каналы (гос. службы)</h2>
+    <table class="channels">
+      <tr><td>Единая служба — работает везде и без SIM</td><td class="num">112</td><td><a href="tel:112">вызов</a></td></tr>
+      <tr><td>Пожарная охрана</td><td class="num">101</td><td><a href="tel:101">вызов</a></td></tr>
+      <tr><td>Полиция</td><td class="num">102</td><td><a href="tel:102">вызов</a></td></tr>
+      <tr><td>Скорая помощь</td><td class="num">103</td><td><a href="tel:103">вызов</a></td></tr>
+      <tr><td>Газовая служба</td><td class="num">104</td><td><a href="tel:104">вызов</a></td></tr>
+    </table>
+  </div>
+
+  <div class="panel">
+    <h2>Журнал обращений — тестовый режим</h2>
+    <div class="console-log" id="log">
+      <div class="line sys">[система] канал связи открыт. Дежурный: Зинченко А.А.</div>
+      <div class="line duty">[Зинченко А.А.] На связи. Назовите характер обращения и адрес.</div>
     </div>
-  </section>
-
-  <section>
-    <h2>Что я прошу говорить в первую очередь</h2>
-    <ul class="advice">
-      <li><strong>Адрес — сразу.</strong> Улица, дом, подъезд, этаж. Это первое, что я вношу в систему, потому что если связь оборвётся — бригада всё равно поедет.</li>
-      <li><strong>Что случилось — в двух словах.</strong> «Мужчине плохо, без сознания» — этого достаточно, дальше я задаю вопросы сама.</li>
-      <li><strong>Не бросайте трубку.</strong> Пока я не скажу «ожидайте» или «повесить трубку можно», линия должна оставаться открытой.</li>
-      <li><strong>Говорите спокойно.</strong> Я понимаю, что страшно. Но чёткая речь экономит минуты, а минуты в нашей работе — это жизни.</li>
-      <li><strong>Дети тоже могут звонить.</strong> Я всегда слушаю внимательно, даже если звонит дошкольник. Научите ребёнка свой адрес и номер телефона — наизусть.</li>
-    </ul>
-  </section>
-
-  <section>
-    <h2>Разговор со мной — потренируйтесь</h2>
-    <p style="margin-bottom:14px; color:#b8b8c8;">Наберите что-нибудь — я отвечу как оператор. Настоящий звонок здесь не произойдёт: для экстренных случаев нажимайте кнопки номеров выше.</p>
-    <div class="chat">
-      <div class="log" id="log">
-        <div class="msg op">Здравствуйте! Я на связи. Что у вас случилось?</div>
-      </div>
-      <input type="text" id="inp" placeholder="Напишите сообщение…" onkeydown="if(event.key==='Enter')send()">
+    <div class="input-row">
+      <input type="text" id="inp" placeholder="Введите обращение…" onkeydown="if(event.key==='Enter')send()">
+      <button onclick="send()">ПЕРЕДАТЬ</button>
     </div>
-  </section>
-
-  <section>
-    <div class="greeting">
-      Спасибо, что дочитали. Надеюсь, эти знания вам никогда не пригодятся.
-      Но если пригодятся — вы будете готовы. <em>— Анна, ваша оператор на том конце линии.</em>
-    </div>
-  </section>
+    <p class="note">Тестовый канал: сообщения не выходят в экстренные службы. Реальный вызов — кнопки и номера выше.</p>
+  </div>
 
 </div>
 
 <footer>
-  В реальной чрезвычайной ситуации звоните <span class="red">112</span> — бесплатно, с любого телефона, даже без SIM-карты.
+  Прямая линия дежурного: +7 993 935-53-78 · Экстренные вызовы: 112 / 101 / 102 / 103 / 104
 </footer>
 
 <script>
-const answers = [
-  { keys: ["пожар", "горит", "дым"], text: "Понял(а), фиксирую. Адрес назовите, пожалуйста: улица, дом, этаж. Не пытайтесь тушить большой огонь сами — сразу выходите и закрывайте за собой дверь." },
-  { keys: ["скорая", "плохо", "болит", "сознание", "сердце", "упал"], text: "Оставайтесь на линии, я подключаю скорую. Человек дышит? Отвечает? Сколько ему лет?" },
-  { keys: ["газ", "пахнет"], text: "Не включайте свет и электроприборы, не зажигайте огонь! Откройте окна и выйдите на улицу. Сейчас соединю с газовой службой." },
-  { keys: ["полиция", "взлом", "вор", "кража", "угроза"], text: "Спокойно, я на связи. Ваш адрес? Что именно происходит и сколько людей на месте?" },
-  { keys: ["привет", "здравствуй"], text: "Здравствуйте! Это учебный чат, я помогу вам потренироваться. Опишите словами ситуацию — как будто звоните мне по-настоящему." },
-  { keys: ["страшно", "боюсь", "помогите"], text: "Я рядом, вы не одни. Дышите глубже и слушайте меня: назовите адрес — и я отправлю помощь." },
-  { keys: ["спасибо"], text: "Не за что. Берегите себя, и пусть этот навык вам не пригодится." }
+// Часы на пульте
+setInterval(() => {
+  document.getElementById('clock').textContent =
+    new Date().toLocaleTimeString('ru-RU');
+}, 1000);
+
+const replies = [
+  { keys: ["пожар", "горит", "дым"], text: "Принято. Адрес: улица, дом, этаж — по порядку. Крупное возгорание не тушите сами, выводите людей." },
+  { keys: ["скорая", "плохо", "болит", "сознание", "сердце"], text: "Фиксирую. Дышит? В сознании? Возраст? Соединяю со скорой — оставайтесь на линии." },
+  { keys: ["газ", "пахнет"], text: "Свет и электроприборы не трогать, огня нет. Окна открыть, выйти из помещения. Передаю на канал 104." },
+  { keys: ["полиция", "взлом", "вор", "кража"], text: "Спокойно. Адрес, что происходит, сколько человек на месте. Передаю на канал 102." },
+  { keys: ["страшно", "помогите"], text: "Вы heard, я на связи. Дышите ровно. Первое: адрес. Второе: что случилось. Действуем по порядку." },
+  { keys: ["спасибо"], text: "Принято. Канал свободен. Берегите себя." }
 ];
+function now() { return new Date().toLocaleTimeString('ru-RU'); }
+function addLine(cls, who, text) {
+  document.getElementById('log').insertAdjacentHTML('beforeend',
+    `<div class="line ${cls}"><span class="time">[${now()}]</span>${who ? '['+who+'] ' : ''}${text}</div>`);
+  const log = document.getElementById('log');
+  log.scrollTop = log.scrollHeight;
+}
 function send() {
   const inp = document.getElementById('inp');
   const text = inp.value.trim();
   if (!text) return;
   inp.value = '';
-  const log = document.getElementById('log');
-  log.insertAdjacentHTML('beforeend', `<div class="msg me">${text.replace(/</g,'&lt;')}</div>`);
+  addLine('caller', 'Вызывающий', text.replace(/</g,'&lt;'));
   const low = text.toLowerCase();
-  const found = answers.find(a => a.keys.some(k => low.includes(k)));
-  const reply = found ? found.text
-    : "Хорошо, я вас услышала. Назовите адрес: улица, дом, подъезд — и коротко, что случилось.";
-  setTimeout(() => {
-    log.insertAdjacentHTML('beforeend', `<div class="msg op">${reply}</div>`);
-    log.scrollTop = log.scrollHeight;
-  }, 600);
-  log.scrollTop = log.scrollHeight;
+  const hit = replies.find(r => r.keys.some(k => low.includes(k)));
+  const reply = hit ? hit.text
+    : "Принято. Уточните адрес: улица, дом, подъезд — и суть обращения одной фразой.";
+  setTimeout(() => addLine('duty', 'Зинченко А.А.', reply), 700);
 }
 </script>
 
