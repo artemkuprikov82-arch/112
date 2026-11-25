@@ -10,12 +10,15 @@
   --gold:#b8963e; --blue:#64748b; --green:#3f7d4e; --red:#a83232; --grey:#9aa3ad; --txt:#e4e6e9;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Georgia,'Times New Roman',serif;background:linear-gradient(180deg,#1a1d21 0%,var(--bg) 100%);color:var(--txt);min-height:100vh}
-h2,h3{color:var(--gold);margin-bottom:10px;font-family:Georgia,serif;letter-spacing:.02em}
-input,select,textarea{width:100%;background:var(--panel2);border:1px solid #3f444b;color:#fff;padding:9px 11px;border-radius:4px;font-size:14px;min-height:38px;margin:4px 0 12px;transition:border-color .15s;font-family:inherit}
+body{font-family:'Times New Roman',Times,serif;background:linear-gradient(180deg,#1a1d21 0%,var(--bg) 100%);color:var(--txt);min-height:100vh;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
+h2,h3{color:var(--gold);margin-bottom:10px;font-family:'Times New Roman',Times,serif;font-weight:700;letter-spacing:.05em}
+input,select,textarea{width:100%;background:var(--panel2);border:1px solid #3f444b;color:#fff;padding:9px 11px;border-radius:4px;font-size:14px;min-height:38px;margin:4px 0 12px;transition:border-color .15s;
+  font-family:'Courier New',Courier,monospace,'Times New Roman',serif;letter-spacing:.5px}
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 2px rgba(184,150,62,.18)}
-label{font-size:12px;color:var(--grey);text-transform:uppercase;letter-spacing:.05em}
-.btn{background:var(--gold);color:#1a1a1a;border:none;padding:9px 16px;border-radius:3px;font-weight:700;cursor:pointer;font-size:13px;width:100%;transition:opacity .15s;font-family:inherit;letter-spacing:.03em}
+label{font-size:12px;color:var(--grey);text-transform:uppercase;letter-spacing:.05em;font-family:'Times New Roman',Times,serif}
+.btn{background:var(--gold);color:#1a1a1a;border:none;padding:9px 16px;border-radius:3px;font-weight:700;cursor:pointer;font-size:13px;width:100%;transition:opacity .15s;
+  font-family:'Times New Roman',Times,serif;letter-spacing:.03em}
 .btn:hover{opacity:.88}
 .btn:active{opacity:.75}
 .btn-b{background:var(--blue);color:#fff;width:auto}
@@ -24,15 +27,15 @@ label{font-size:12px;color:var(--grey);text-transform:uppercase;letter-spacing:.
 /* ---------- логин ---------- */
 #loginBox{max-width:380px;margin:8vh auto;padding:28px;background:var(--panel);border-top:3px double var(--gold);border-radius:4px;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.5)}
 #loginBox h2{font-size:24px}
-.hint{color:var(--grey);font-size:12px;margin-top:10px;line-height:1.5}
+.hint{color:var(--grey);font-size:12px;margin-top:10px;line-height:1.5;font-family:'Times New Roman',Times,serif}
 /* ---------- каркас ---------- */
 #shell{display:flex;min-height:100vh}
 #side{width:240px;background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:14px 10px;position:sticky;top:0;height:100vh;flex-shrink:0;overflow-y:auto}
-.logo{font-size:16px;font-weight:700;color:var(--gold);padding:6px 8px 14px;border-bottom:1px solid var(--line);margin-bottom:12px;text-transform:uppercase;letter-spacing:.04em}
-.nav-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:3px;cursor:pointer;font-size:14px;color:var(--txt);margin-bottom:3px;transition:background .15s;border-left:3px solid transparent}
+.logo{font-size:16px;font-weight:700;color:var(--gold);padding:6px 8px 14px;border-bottom:1px solid var(--line);margin-bottom:12px;text-transform:uppercase;letter-spacing:.04em;font-family:'Times New Roman',Times,serif}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:3px;cursor:pointer;font-size:14px;color:var(--txt);margin-bottom:3px;transition:background .15s;border-left:3px solid transparent;font-family:'Times New Roman',Times,serif}
 .nav-item:hover{background:#282c32}
 .nav-item.active{background:#2b2f35;color:#fff;font-weight:700;border-left:3px solid var(--gold)}
-#sideUser{margin-top:auto;background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:10px;font-size:12px;line-height:1.5}
+#sideUser{margin-top:auto;background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:10px;font-size:12px;line-height:1.5;font-family:'Times New Roman',Times,serif}
 #sideUser b{color:var(--gold)}
 #main{flex:1;padding:18px 22px;max-width:1050px}
 #mainHead{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;gap:10px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:12px}
@@ -42,33 +45,35 @@ label{font-size:12px;color:var(--grey);text-transform:uppercase;letter-spacing:.
 .statgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:16px}
 .stat{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:16px;text-align:center;cursor:pointer;transition:border-color .15s}
 .stat:hover{border-color:var(--gold)}
-.stat .num{font-size:30px;font-weight:700;color:var(--gold);font-family:Georgia,serif}
+.stat .num{font-size:30px;font-weight:700;color:var(--gold);
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
 .stat .num.red{color:var(--red)}
-.stat .lbl{font-size:12px;color:var(--grey);margin-top:4px;text-transform:uppercase;letter-spacing:.04em}
+.stat .lbl{font-size:12px;color:var(--grey);margin-top:4px;text-transform:uppercase;letter-spacing:.04em;font-family:'Times New Roman',Times,serif}
 table{width:100%;border-collapse:collapse;font-size:13px}
-th{background:var(--panel2);color:var(--gold);text-align:left;padding:9px 8px;border:1px solid var(--line);white-space:nowrap;text-transform:uppercase;font-size:11px;letter-spacing:.05em}
-td{border:1px solid var(--line);padding:8px;vertical-align:top}
+th{background:var(--panel2);color:var(--gold);text-align:left;padding:9px 8px;border:1px solid var(--line);white-space:nowrap;text-transform:uppercase;font-size:11px;letter-spacing:.05em;font-family:'Times New Roman',Times,serif}
+td{border:1px solid var(--line);padding:8px;vertical-align:middle;
+  font-family:'Courier New',Courier,monospace,'Times New Roman',serif}
 tbody tr{transition:background .12s}
 tbody tr:hover{background:rgba(184,150,62,.05)}
 td select,td input{margin:0;padding:4px 8px;min-height:30px;font-size:12px}
-.muted{color:var(--grey);font-size:13px}
+.muted{color:var(--grey);font-size:13px;font-family:'Times New Roman',Times,serif}
 .overdue{background:rgba(168,50,50,.14)!important}
 .soon{background:rgba(184,150,62,.10)!important}
 .row2{display:flex;gap:12px}.row2>div{flex:1}
 .row3{display:flex;gap:12px}.row3>div{flex:1}
-.badge{display:inline-block;padding:3px 10px;border-radius:2px;font-size:11px;font-weight:600;white-space:nowrap}
+.badge{display:inline-block;padding:3px 10px;border-radius:2px;font-size:11px;font-weight:600;white-space:nowrap;font-family:'Courier New',Courier,monospace,serif}
 .b-blue{background:#3d4654}.b-green{background:#2c5e3a}.b-red{background:#7a2626}.b-grey{background:#3a3f46}.b-yellow{background:#7a6526}.b-purple{background:#54325e}.b-orange{background:#7a4a22}
-.att-item{padding:10px 12px;border-radius:3px;margin-bottom:8px;font-size:13px;line-height:1.5}
+.att-item{padding:10px 12px;border-radius:3px;margin-bottom:8px;font-size:13px;line-height:1.5;font-family:'Times New Roman',Times,serif}
 .att-item.overdue{border-left:4px solid var(--red)}
 .att-item.soon{border-left:4px solid var(--gold)}
-.empty{color:var(--grey);text-align:center;padding:26px 10px;font-size:14px}
+.empty{color:var(--grey);text-align:center;padding:26px 10px;font-size:14px;font-family:'Times New Roman',Times,serif}
 .empty .big{font-size:30px;display:block;margin-bottom:8px;filter:grayscale(40%)}
 hr{border:none;border-top:1px solid var(--line);margin:14px 0}
 /* ---------- тост и модалка ---------- */
-#toast{position:fixed;bottom:22px;right:22px;background:var(--green);color:#fff;padding:12px 20px;border-radius:4px;font-weight:700;display:none;z-index:100;box-shadow:0 8px 24px rgba(0,0,0,.5)}
+#toast{position:fixed;bottom:22px;right:22px;background:var(--green);color:#fff;padding:12px 20px;border-radius:4px;font-weight:700;display:none;z-index:100;box-shadow:0 8px 24px rgba(0,0,0,.5);font-family:'Times New Roman',Times,serif}
 #toast.errT{background:var(--red);color:#fff}
 #modalWrap{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;align-items:center;justify-content:center;z-index:90}
-#modal{background:var(--panel);border:1px solid var(--line);border-top:3px double var(--gold);border-radius:4px;padding:22px;max-width:380px;width:90%;text-align:center}
+#modal{background:var(--panel);border:1px solid var(--line);border-top:3px double var(--gold);border-radius:4px;padding:22px;max-width:380px;width:90%;text-align:center;font-family:'Times New Roman',Times,serif}
 #modal p{margin:12px 0 18px;line-height:1.5}
 #modal .btns{display:flex;gap:10px;justify-content:center}
 #modal .btn{width:auto;min-width:110px}
@@ -94,7 +99,7 @@ hr{border:none;border-top:1px solid var(--line);margin:14px 0}
   <input type="password" id="uPass" placeholder="Код доступа">
   <button type="button" class="btn" onclick="login()">Войти</button>
   <p id="err" class="err" style="display:none;margin-top:10px">Неверные данные!</p>
-  <p class="hint">Вход по фамилии с инициалами или полному ФИО.<br>Коды доступа выдаёт прокурор района.</p>
+  <p class="hint">Вход по фамилии с инициалами, полному ФИО или должности.<br>Коды доступа выдаёт прокурор района.</p>
 </div>
 
 <!-- ======== ПРИЛОЖЕНИЕ ======== -->
@@ -367,6 +372,10 @@ hr{border:none;border-top:1px solid var(--line);margin:14px 0}
 <div id="modalWrap"><div id="modal"><h3 id="modalTitle">Подтверждение</h3><p id="modalText"></p><div class="btns"><button class="btn btn-r" id="modalOk">Удалить</button><button class="btn btn-g" onclick="closeModal()">Отмена</button></div></div></div>
 
 <script>
+/* Диагностика: любая ошибка скрипта видна на экране, а не только в консоли */
+window.addEventListener('error',e=>{const t=document.getElementById('toast');
+  if(t){t.textContent='Ошибка: '+e.message;t.className='errT';t.style.display='block'}});
+
 const $=id=>document.getElementById(id);
 const TABS={1:'Приборка',2:'Регистрация',3:'Надзорные производства',4:'Проверки',5:'Приёмная',6:'Правовая база',7:'Кадры',8:'Администрирование',9:'План работы',10:'Поручения',11:'Дежурства',12:'Статистика',13:'Реквизиты'};
 const ICONS={1:'📊',2:'📄',3:'🗂️',4:'📅',5:'👥',6:'📖',7:'🧑‍💼',8:'🔐',9:'🗓️',10:'📋',11:'🌙',12:'📈',13:'📞'};
@@ -377,7 +386,7 @@ const KEY='nador_db';
 const OLD_KEYS=['nador_db_v5','nador_db_v4','nador_db_v3'];
 let db=null,users=null,me=null,curTab=1;
 
-/* ---------- должности и права ---------- */
+/* ---------- эталонные сотрудники и права ---------- */
 function defaultUsers(){return[
  {fio:'Зинченко Артём Анатольевич',login:'Зинченко А.А.',pos:'Прокурор района',pass:'7401',
   tabs:[1,2,3,4,5,6,7,8,9,10,11,12,13],edit:[2,3,4,5,7,9,10,11,13],del:true,npAll:true,admin:true},
@@ -389,6 +398,17 @@ function defaultUsers(){return[
   tabs:[1,2,3,5,6,10,11,12,13],edit:[3,5],del:false,npAll:false,admin:false}
 ];}
 
+/* Старую запись сотрудника «доводим» до актуальных прав, пароль и ФИО сохраняем */
+function fixUser(u){
+  const def=defaultUsers().find(d=>d.login===u.login);
+  if(def){return Object.assign({},def,{pass:u.pass||def.pass,fio:u.fio||def.fio,pos:u.pos||def.pos})}
+  u.tabs=(Array.isArray(u.tabs)&&u.tabs.length)?u.tabs:[1];
+  if(!u.tabs.includes(1))u.tabs.unshift(1);
+  u.edit=Array.isArray(u.edit)?u.edit:[];
+  u.del=!!u.del;u.npAll=!!u.npAll;u.admin=!!u.admin;
+  return u;
+}
+
 /* ---------- хранилище ---------- */
 function load(){
   try{
@@ -399,11 +419,7 @@ function load(){
     for(const k of OLD_KEYS){
       try{
         const raw=JSON.parse(localStorage.getItem(k));
-        if(raw&&raw.db&&raw.users){
-          db=raw.db;users=raw.users;
-          toast('Данные перенесены из предыдущей версии');
-          break;
-        }
+        if(raw&&raw.db&&raw.users){db=raw.db;users=raw.users;break}
       }catch(e){}
     }
   }
@@ -411,10 +427,10 @@ function load(){
     users=defaultUsers();
     db={seq:{},reg:[],np:[],checks:[],cit:[],cand:[]};
   }
-  users=users||defaultUsers();
+  users=users.map(fixUser);
   if(!db.seq)db.seq={};
   ['np','cit','task','plan','duty'].forEach(k=>{if(!db.seq[k])db.seq[k]=0});
-  ['reg','np','checks','cit','cand','plan','tasks','duty'].forEach(k=>{if(!db[k])db[k]=[]});
+  ['reg','np','checks','cit','cand','plan','tasks','duty'].forEach(k=>{if(!Array.isArray(db[k]))db[k]=[]});
   if(!db.info)db.info={address:'г. Челябинск, Тракторозаводской район — заполните в разделе «Реквизиты»',
     phone:'+7 (351) 000-00-00 — заполните в разделе «Реквизиты»',
     hot:'Телефон доверия Генпрокуратуры РФ: +7 (495) 987-56-56',
@@ -437,7 +453,7 @@ function importData(file){
   const r=new FileReader();
   r.onload=()=>{try{
     const raw=JSON.parse(r.result);
-    if(raw.db&&raw.users){db=raw.db;users=raw.users;load();save();renderAll();buildNav();renderSideUser();toast('Данные восстановлены из копии')}
+    if(raw.db&&raw.users){db=raw.db;users=raw.users.map(fixUser);save();renderAll();buildNav();renderSideUser();toast('Данные восстановлены из копии')}
     else toast('Неверный формат файла',true);
   }catch(e){toast('Не удалось прочитать файл',true)}};
   r.readAsText(file);
@@ -473,7 +489,6 @@ function enter(){
 function logout(){localStorage.removeItem('nador_user');location.reload()}
 
 /* ---------- навигация и права ---------- */
-const TAB_COUNT=13;
 function buildNav(){
   $('nav').innerHTML=Object.keys(TABS).map(i=>{
     const visible=me.tabs.includes(+i);
@@ -486,14 +501,14 @@ function renderSideUser(){
 function tab(i){
   if(!me.tabs.includes(i)){toast('Нет доступа к разделу «'+TABS[i]+'»',true);return}
   curTab=i;
-  for(let j=1;j<=TAB_COUNT;j++)$('s'+j).style.display=(j===i)?'block':'none';
-  Object.keys(TABS).forEach(j=>$('navItem'+j).classList.toggle('active',+j===i));
+  for(let j=1;j<=13;j++){const sec=$('s'+j);if(sec)sec.style.display=(j===i)?'block':'none'}
+  Object.keys(TABS).forEach(j=>{const el=$('navItem'+j);if(el)el.classList.toggle('active',+j===i)});
   $('tabTitle').textContent=ICONS[i]+' '+TABS[i];
   $('todayLine').textContent=new Date().toLocaleDateString('ru-RU',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
   const formId=EDIT_LABEL[i];
-  Object.values(EDIT_LABEL).forEach(id=>$(id).style.display='none');
+  Object.values(EDIT_LABEL).forEach(id=>{const el=$(id);if(el)el.style.display='none'});
   if(formId&&me.edit.includes(i))$(formId).style.display='block';
-  if(i===13)$('infoEditCard').style.display=canEdit(13)?'block':'none';
+  if(i===13&&$('infoEditCard'))$('infoEditCard').style.display=canEdit(13)?'block':'none';
   fillExecutors();renderAll();
 }
 const canEdit=t=>me.edit.includes(t);
