@@ -277,6 +277,12 @@ hr{border:none;border-top:1px solid var(--line);margin:14px 0}
         <div class="row2"><div><label>Должность</label><input id="newPos"></div><div><label>Код доступа</label><input id="newPass"></div></div>
         <button type="button" class="btn" onclick="addUser()">Добавить сотрудника</button>
       </div>
+      <div class="card">
+        <h3>💾 Резервная копия</h3>
+        <p class="muted" style="margin-bottom:10px">Экспорт сохраняет все журналы и список сотрудников в один файл. Импорт восстанавливает данные из копии — удобно при переносе на другой компьютер или после очистки браузера.</p>
+        <button type="button" class="btn" onclick="exportData()">⬇️ Скачать резервную копию</button>
+        <label class="btn btn-g" style="margin-top:8px;display:block">⬆️ Восстановить из файла<input type="file" accept=".json" style="display:none" onchange="importData(this.files[0])"></label>
+      </div>
     </section>
   </main>
 </div>
@@ -291,7 +297,10 @@ const ICONS={1:'📊',2:'📄',3:'🗂️',4:'📅',5:'👥',6:'📖',7:'🧑‍
 const EDIT_LABEL={2:'regFormCard',3:'npFormCard',4:'checkFormCard',5:'citFormCard',7:'candFormCard'};
 const NP_STATUS=['В производстве','Продлено','Передано в суд','В суде','Исполнено','Архив'];
 const NP_ACTIVE=['В производстве','Продлено','Передано в суд','В суде'];
-const KEY='nador_db_v5';
+/* Ключ хранилища теперь постоянный: при обновлении кода данные сохраняются.
+   OLD_KEYS — старые ключи, с которых данные автоматически переносятся один раз. */
+const KEY='nador_db';
+const OLD_KEYS=['nador_db_v5','nador_db_v4','nador_db_v3'];
 let db=null,users=null,me=null,curTab=1;
 
 /* ---------- должности и права ---------- */
@@ -308,13 +317,49 @@ function defaultUsers(){return[
 
 /* ---------- хранилище ---------- */
 function load(){
-  try{const raw=JSON.parse(localStorage.getItem(KEY));
-    if(raw&&raw.db&&raw.users){db=raw.db;users=raw.users;return}}catch(e){}
+  try{
+    const raw=JSON.parse(localStorage.getItem(KEY));
+    if(raw&&raw.db&&raw.users){db=raw.db;users=raw.users;return}
+  }catch(e){}
+  /* миграция: если база под новым ключом пуста, забираем данные со старых ключей */
+  for(const k of OLD_KEYS){
+    try{
+      const raw=JSON.parse(localStorage.getItem(k));
+      if(raw&&raw.db&&raw.users){
+        db=raw.db;users=raw.users;
+        if(!db.seq)db.seq={np:0,cit:0};
+        save();
+        toast('Данные перенесены из предыдущей версии');
+        return;
+      }
+    }catch(e){}
+  }
   users=defaultUsers();
   db={seq:{np:0,cit:0},reg:[],np:[],checks:[],cit:[],cand:[]};
   save();
 }
 function save(){localStorage.setItem(KEY,JSON.stringify({db,users}))}
+
+/* ---------- резервная копия ---------- */
+function exportData(){
+  const blob=new Blob([JSON.stringify({db,users},null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='nador_backup_'+todayStr()+'.json';
+  a.click();URL.revokeObjectURL(a.href);
+  toast('Резервная копия скачана');
+}
+function importData(file){
+  if(!file)return;
+  const r=new FileReader();
+  r.onload=()=>{try{
+    const raw=JSON.parse(r.result);
+    if(raw.db&&raw.users){db=raw.db;users=raw.users;save();renderAll();buildNav();renderSideUser();toast('Данные восстановлены из копии')}
+    else toast('Неверный формат файла',true);
+  }catch(e){toast('Не удалось прочитать файл',true)}};
+  r.readAsText(file);
+}
+
 function toast(m,isErr){const t=$('toast');t.textContent=m;t.className=isErr?'errT':'';t.style.display='block';clearTimeout(t._h);t._h=setTimeout(()=>t.style.display='none',2600)}
 
 /* ---------- модальное подтверждение ---------- */
