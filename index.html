@@ -35,7 +35,7 @@ label{font-size:12px;color:var(--grey)}
 #sideUser{margin-top:auto;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:10px;font-size:12px;line-height:1.5}
 #sideUser b{color:var(--gold)}
 #main{flex:1;padding:18px 22px;max-width:1050px}
-#mainHead{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;gap:10px}
+#mainHead{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;gap:10px;flex-wrap:wrap}
 #mainHead h2{margin:0}
 /* ---------- элементы ---------- */
 .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:16px;box-shadow:0 4px 14px rgba(0,0,0,.25)}
@@ -52,13 +52,12 @@ tbody tr{transition:background .12s}
 tbody tr:hover{background:rgba(234,179,8,.06)}
 td select,td input{margin:0;padding:4px 8px;min-height:30px;font-size:12px}
 .muted{color:var(--grey);font-size:13px}
-.ok{color:var(--green);font-weight:700}
 .overdue{background:rgba(239,68,68,.13)!important}
 .soon{background:rgba(234,179,8,.10)!important}
 .row2{display:flex;gap:12px}.row2>div{flex:1}
 .row3{display:flex;gap:12px}.row3>div{flex:1}
 .badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap}
-.b-blue{background:#1d4ed8}.b-green{background:#166534}.b-red{background:#991b1b}.b-grey{background:#475569}.b-yellow{background:#a16207}.b-black{background:#111827}
+.b-blue{background:#1d4ed8}.b-green{background:#166534}.b-red{background:#991b1b}.b-grey{background:#475569}.b-yellow{background:#a16207}.b-purple{background:#6d28d9}.b-orange{background:#c2410c}
 .att-item{padding:10px 12px;border-radius:8px;margin-bottom:8px;font-size:13px;line-height:1.5}
 .att-item.overdue{border-left:4px solid var(--red)}
 .att-item.soon{border-left:4px solid var(--gold)}
@@ -168,16 +167,18 @@ hr{border:none;border-top:1px solid var(--line);margin:14px 0}
             <select id="npVid">
               <option>Надзорное производство</option>
               <option>Проверка</option>
+              <option>Протест</option>
               <option>Представление</option>
               <option>Предостережение</option>
               <option>Постановление</option>
+              <option>Обращение в суд</option>
             </select></div>
           <div><label>Исполнитель</label><select id="npExec"></select></div>
         </div>
         <label>Предмет (кратко)</label><input id="npSubject" placeholder="существо вопроса, объект, основание">
         <div class="row2">
           <div><label>Срок исполнения</label><input type="date" id="npDue"></div>
-          <div><label>Статус</label><select id="npStatus"><option>В производстве</option><option>Продлено</option><option>Исполнено</option><option>Архив</option></select></div>
+          <div><label>Статус</label><select id="npStatus"><option>В производстве</option><option>Продлено</option><option>Передано в суд</option><option>В суде</option><option>Исполнено</option><option>Архив</option></select></div>
         </div>
         <button type="button" class="btn" onclick="addNp()">Зарегистрировать производство</button>
       </div>
@@ -245,7 +246,7 @@ hr{border:none;border-top:1px solid var(--line);margin:14px 0}
         </ul>
       </div>
       <div class="card"><h3>📌 Памятка исполнителю</h3>
-        <p class="muted" style="line-height:1.8">Контрольные сроки фиксируются при регистрации. Продление — только с разрешения прокурора района. Акт реагирования выносится по результатам проверки, копии направляются руководителю проверяемого органа.</p>
+        <p class="muted" style="line-height:1.8">Контрольные сроки фиксируются при регистрации. Продление — только с разрешения прокурора района. Протест подлежит рассмотрению не позднее 10 дней (ст. 23 ФЗ «О прокуратуре»), представление — в течение месяца (ст. 24). Копии актов направляются руководителю проверяемого органа.</p>
       </div>
     </section>
 
@@ -288,18 +289,21 @@ const $=id=>document.getElementById(id);
 const TABS={1:'Приборка',2:'Регистрация',3:'Надзорные производства',4:'Проверки',5:'Приёмная',6:'Правовая база',7:'Кадры',8:'Администрирование'};
 const ICONS={1:'📊',2:'📄',3:'🗂️',4:'📅',5:'👥',6:'📖',7:'🧑‍💼',8:'🔐'};
 const EDIT_LABEL={2:'regFormCard',3:'npFormCard',4:'checkFormCard',5:'citFormCard',7:'candFormCard'};
-const KEY='nador_db_v4';
+const NP_STATUS=['В производстве','Продлено','Передано в суд','В суде','Исполнено','Архив'];
+const NP_ACTIVE=['В производстве','Продлено','Передано в суд','В суде'];
+const KEY='nador_db_v5';
 let db=null,users=null,me=null,curTab=1;
 
 /* ---------- должности и права ---------- */
 function defaultUsers(){return[
- {fio:'Петров Пётр Петрович',login:'Петров П.П.',pos:'Прокурор района',pass:'1111',tabs:[1,2,3,4,5,6,7,8],edit:[2,3,4,5,7,8],del:true,npAll:true,admin:true},
- {fio:'Сидоров Сергей Сергеевич',login:'Сидоров С.С.',pos:'Первый заместитель прокурора',pass:'2222',tabs:[1,2,3,4,5,6,7],edit:[2,3,4,5],del:true,npAll:true,admin:false},
- {fio:'Кузнецова Мария Викторовна',login:'Кузнецова М.В.',pos:'Старший помощник прокурора',pass:'3333',tabs:[1,2,3,4,5,6,7],edit:[2,3,4,5],del:false,npAll:true,admin:false},
- {fio:'Зинченко Каролина Витальевна',login:'Зинченко К.В.',pos:'Помощник прокурора',pass:'7404',tabs:[1,2,3,5,6],edit:[3,5],del:false,npAll:false,admin:false},
- {fio:'Орлов Дмитрий Николаевич',login:'Орлов Д.Н.',pos:'Помощник прокурора',pass:'5555',tabs:[1,2,3,5,6],edit:[3,5],del:false,npAll:false,admin:false},
- {fio:'Смирнова Елена Андреевна',login:'Смирнова Е.А.',pos:'Секретарь-делопроизводитель',pass:'6666',tabs:[1,2,5,6],edit:[2,5],del:false,npAll:false,admin:false},
- {fio:'Иванова Ольга Львовна',login:'Иванова О.Л.',pos:'Специалист',pass:'7777',tabs:[1,2,5],edit:[2,5],del:false,npAll:false,admin:false}
+ {fio:'Зинченко Артём Анатольевич',login:'Зинченко А.А.',pos:'Прокурор района',pass:'7401',
+  tabs:[1,2,3,4,5,6,7,8],edit:[2,3,4,5,7,8],del:true,npAll:true,admin:true},
+ {fio:'Зинченко Елизавета Анатольевна',login:'Зинченко Е.А.',pos:'Заместитель прокурора района',pass:'7402',
+  tabs:[1,2,3,4,5,6,7],edit:[2,3,4,5],del:true,npAll:true,admin:false},
+ {fio:'Зинченко Василиса Витальевна',login:'Зинченко В.В.',pos:'Старший помощник прокурора',pass:'7403',
+  tabs:[1,2,3,4,5,6,7],edit:[2,3,4,5],del:false,npAll:true,admin:false},
+ {fio:'Зинченко Каролина Витальевна',login:'Зинченко К.В.',pos:'Помощник прокурора',pass:'7404',
+  tabs:[1,2,3,5,6],edit:[3,5],del:false,npAll:false,admin:false}
 ];}
 
 /* ---------- хранилище ---------- */
@@ -307,7 +311,7 @@ function load(){
   try{const raw=JSON.parse(localStorage.getItem(KEY));
     if(raw&&raw.db&&raw.users){db=raw.db;users=raw.users;return}}catch(e){}
   users=defaultUsers();
-  db={seq:{np:0,reg:0,cit:0},reg:[],np:[],checks:[],cit:[],cand:[]};
+  db={seq:{np:0,cit:0},reg:[],np:[],checks:[],cit:[],cand:[]};
   save();
 }
 function save(){localStorage.setItem(KEY,JSON.stringify({db,users}))}
@@ -324,7 +328,7 @@ function login(){
   const n=$('uName').value.trim(),p=$('uPass').value.trim();
   $('err').style.display='none';
   if(!n||!p){$('err').textContent='Заполните оба поля!';$('err').style.display='block';return}
-  const u=users.find(x=>(x.login.toLowerCase()===n.toLowerCase()||x.fio.toLowerCase()===n.toLowerCase()||x.pos.toLowerCase()===n.toLowerCase())&&x.pass===p);
+  const u=users.find(x=>(x.login.toLowerCase()===n.toLowerCase()||x.fio.toLowerCase()===n.toLowerCase())&&x.pass===p);
   if(!u){$('err').textContent='Неверные данные!';$('err').style.display='block';return}
   me=u;localStorage.setItem('nador_user',u.login);
   enter();
@@ -373,7 +377,7 @@ function fillExecutors(){
 function dueClass(d){if(!d)return'';const t=new Date();t.setHours(0,0,0,0);const dd=new Date(d);
   return dd<t?'overdue':(dd-t<7*864e5?'soon':'')}
 function fmt(d){if(!d)return'—';return new Date(d).toLocaleDateString('ru-RU')}
-function badge(text){const m={'В производстве':'b-yellow','Продлено':'b-blue','Исполнено':'b-green','Архив':'b-grey','На контроле':'b-blue','В работе':'b-yellow','Отозвано':'b-grey','Черновик':'b-grey','Согласовано прокурором':'b-green','Отказано':'b-red','Назначено':'b-blue','Принят':'b-green','Отказ':'b-red'};
+function badge(text){const m={'В производстве':'b-yellow','Продлено':'b-blue','Передано в суд':'b-orange','В суде':'b-orange','Исполнено':'b-green','Архив':'b-grey','На контроле':'b-blue','В работе':'b-yellow','Отозвано':'b-grey','Черновик':'b-grey','Согласовано прокурором':'b-green','Отказано':'b-red','Назначено':'b-blue','Принят':'b-green','Отказ':'b-red','Протест':'b-purple','Представление':'b-purple','Предостережение':'b-purple','Постановление':'b-purple','Обращение в суд':'b-purple','Надзорное производство':'b-grey','Проверка':'b-blue','Входящее':'b-blue','Исходящее':'b-grey'};
   return `<span class="badge ${m[text]||'b-grey'}">${text}</span>`}
 function renderAll(){renderGreet();renderStats();renderAttention();renderReg();renderNp();renderChecks();renderCit();renderCand();if(me.admin)renderAdm()}
 
@@ -384,7 +388,7 @@ function renderGreet(){
    <p class="muted">Вы вошли как <b style="color:var(--txt)">${me.pos}</b>. ${me.npAll?'Вам доступны надзорные производства всего района.':'Вам доступны производства, где вы назначены исполнителем.'}</p>`;
 }
 function renderStats(){
-  const act=npVisible().filter(x=>['В производстве','Продлено'].includes(x.status));
+  const act=npVisible().filter(x=>NP_ACTIVE.includes(x.status));
   const over=act.filter(x=>x.due&&new Date(x.due)<new Date());
   const soon=act.filter(x=>x.due&&new Date(x.due)>=new Date()&&new Date(x.due)-new Date()<7*864e5);
   const cit=db.cit.filter(x=>x.status==='В работе');
@@ -392,14 +396,14 @@ function renderStats(){
   $('statgrid').innerHTML=st(act.length,'НП в производстве','','3')+st(over.length,'просрочено НП','red','3')
    +st(soon.length,'срок истекает на неделе','red','3')+st(cit.length,'обращений в работе','','5');
 }
-function attLine(kind,title,subject,exec,due){
+function attLine(title,subject,exec,due){
   const cls=dueClass(due);
   return `<div class="att-item ${cls}">${cls==='overdue'?'🔴':cls==='soon'?'🟡':'ℹ️'} <b>${title}</b> — ${subject}<br><span style="color:var(--grey)">Исполнитель: ${exec} · срок: ${fmt(due)}</span></div>`;
 }
 function renderAttention(){
   let html='';
-  npVisible().forEach(x=>{if(x.due&&['В производстве','Продлено'].includes(x.status))html+=attLine('np',x.num,x.subject,x.exec,x.due)});
-  db.cit.forEach(x=>{if(x.status==='В работе'){const due=new Date(new Date(x.date).getTime()+x.days*864e5).toISOString().slice(0,10);html+=attLine('cit','Обращение №'+x.id,x.subject,x.exec,due)}});
+  npVisible().forEach(x=>{if(x.due&&NP_ACTIVE.includes(x.status))html+=attLine(x.num,x.subject,x.exec,x.due)});
+  db.cit.forEach(x=>{if(x.status==='В работе'){const due=new Date(new Date(x.date).getTime()+x.days*864e5).toISOString().slice(0,10);html+=attLine('Обращение №'+x.id,x.subject,x.exec,due)}});
   $('attention').innerHTML=html||`<div class="empty"><span class="big">✅</span>Просроченных и срочных записей нет. Все сроки под контролем.</div>`;
 }
 function renderReg(){
@@ -419,7 +423,7 @@ function renderNp(){
   if(!list.length)h+=`<tr><td colspan="10"><div class="empty"><span class="big">🗂️</span>Производств нет. Заведите первое через форму выше.</div></td></tr>`;
   list.forEach(x=>{
     h+=`<tr class="${dueClass(x.due)}"><td>${x.num}</td><td>${fmt(x.dateReg)}</td><td>${badge(x.vid)}</td><td>${x.otr}</td><td>${x.subject}</td><td>${x.exec}</td><td>${fmt(x.due)}</td>`
-     +(canEdit(3)?`<td><select onchange="updNp(${x.id},'status',this.value)">${['В производстве','Продлено','Исполнено','Архив'].map(s=>`<option${x.status===s?' selected':''}>${s}</option>`).join('')}</select></td>`:`<td>${badge(x.status)}</td>`)
+     +(canEdit(3)?`<td><select onchange="updNp(${x.id},'status',this.value)">${NP_STATUS.map(s=>`<option${x.status===s?' selected':''}>${s}</option>`).join('')}</select></td>`:`<td>${badge(x.status)}</td>`)
      +`<td style="min-width:130px">${canEdit(3)?`<input value="${(x.result||'').replace(/"/g,'&quot;')}" onchange="updNp(${x.id},'result',this.value)" placeholder="итог">`:(x.result||'—')}</td>`
      +(canEdit(3)?`<td><button class="btn btn-r" style="padding:4px 8px" onclick="delRec('np',${x.id})">✕</button></td>`:'')+'</tr>'});
   $('npTable').innerHTML=h;
