@@ -10,12 +10,15 @@
   --gold:#b8963e; --blue:#64748b; --green:#3f7d4e; --red:#a83232; --grey:#9aa3ad; --txt:#e4e6e9;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Georgia,'Times New Roman',serif;background:linear-gradient(180deg,#1a1d21 0%,var(--bg) 100%);color:var(--txt);min-height:100vh}
-h2,h3{color:var(--gold);margin-bottom:10px;font-family:Georgia,serif;letter-spacing:.02em}
-input,select,textarea{width:100%;background:var(--panel2);border:1px solid #3f444b;color:#fff;padding:9px 11px;border-radius:4px;font-size:14px;min-height:38px;margin:4px 0 12px;transition:border-color .15s;font-family:inherit}
+body{font-family:'Times New Roman',Times,serif;background:linear-gradient(180deg,#1a1d21 0%,var(--bg) 100%);color:var(--txt);min-height:100vh;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
+h2,h3{color:var(--gold);margin-bottom:10px;font-family:'Times New Roman',Times,serif;font-weight:700;letter-spacing:.05em}
+input,select,textarea{width:100%;background:var(--panel2);border:1px solid #3f444b;color:#fff;padding:9px 11px;border-radius:4px;font-size:14px;min-height:38px;margin:4px 0 12px;transition:border-color .15s;
+  font-family:'Courier New',Courier,monospace,'Times New Roman',serif;letter-spacing:.5px}
 input:focus,select:focus,textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 2px rgba(184,150,62,.18)}
-label{font-size:12px;color:var(--grey);text-transform:uppercase;letter-spacing:.05em}
-.btn{background:var(--gold);color:#1a1a1a;border:none;padding:9px 16px;border-radius:3px;font-weight:700;cursor:pointer;font-size:13px;width:100%;transition:opacity .15s;font-family:inherit;letter-spacing:.03em}
+label{font-size:12px;color:var(--grey);text-transform:uppercase;letter-spacing:.05em;font-family:'Times New Roman',Times,serif}
+.btn{background:var(--gold);color:#1a1a1a;border:none;padding:9px 16px;border-radius:3px;font-weight:700;cursor:pointer;font-size:13px;width:100%;transition:opacity .15s;
+  font-family:'Times New Roman',Times,serif;letter-spacing:.03em}
 .btn:hover{opacity:.88}
 .btn:active{opacity:.75}
 .btn-b{background:var(--blue);color:#fff;width:auto}
@@ -24,15 +27,15 @@ label{font-size:12px;color:var(--grey);text-transform:uppercase;letter-spacing:.
 /* ---------- логин ---------- */
 #loginBox{max-width:380px;margin:8vh auto;padding:28px;background:var(--panel);border-top:3px double var(--gold);border-radius:4px;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.5)}
 #loginBox h2{font-size:24px}
-.hint{color:var(--grey);font-size:12px;margin-top:10px;line-height:1.5}
+.hint{color:var(--grey);font-size:12px;margin-top:10px;line-height:1.5;font-family:'Times New Roman',Times,serif}
 /* ---------- каркас ---------- */
 #shell{display:flex;min-height:100vh}
-#side{width:240px;background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:14px 10px;position:sticky;top:0;height:100vh;flex-shrink:0}
-.logo{font-size:16px;font-weight:700;color:var(--gold);padding:6px 8px 14px;border-bottom:1px solid var(--line);margin-bottom:12px;text-transform:uppercase;letter-spacing:.04em}
-.nav-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:3px;cursor:pointer;font-size:14px;color:var(--txt);margin-bottom:3px;transition:background .15s;border-left:3px solid transparent}
+#side{width:240px;background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:14px 10px;position:sticky;top:0;height:100vh;flex-shrink:0;overflow-y:auto}
+.logo{font-size:16px;font-weight:700;color:var(--gold);padding:6px 8px 14px;border-bottom:1px solid var(--line);margin-bottom:12px;text-transform:uppercase;letter-spacing:.04em;font-family:'Times New Roman',Times,serif}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:3px;cursor:pointer;font-size:14px;color:var(--txt);margin-bottom:3px;transition:background .15s;border-left:3px solid transparent;font-family:'Times New Roman',Times,serif}
 .nav-item:hover{background:#282c32}
 .nav-item.active{background:#2b2f35;color:#fff;font-weight:700;border-left:3px solid var(--gold)}
-#sideUser{margin-top:auto;background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:10px;font-size:12px;line-height:1.5}
+#sideUser{margin-top:auto;background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:10px;font-size:12px;line-height:1.5;font-family:'Times New Roman',Times,serif}
 #sideUser b{color:var(--gold)}
 #main{flex:1;padding:18px 22px;max-width:1050px}
 #mainHead{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;gap:10px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:12px}
@@ -42,33 +45,35 @@ label{font-size:12px;color:var(--grey);text-transform:uppercase;letter-spacing:.
 .statgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:16px}
 .stat{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:16px;text-align:center;cursor:pointer;transition:border-color .15s}
 .stat:hover{border-color:var(--gold)}
-.stat .num{font-size:30px;font-weight:700;color:var(--gold);font-family:Georgia,serif}
+.stat .num{font-size:30px;font-weight:700;color:var(--gold);
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
 .stat .num.red{color:var(--red)}
-.stat .lbl{font-size:12px;color:var(--grey);margin-top:4px;text-transform:uppercase;letter-spacing:.04em}
+.stat .lbl{font-size:12px;color:var(--grey);margin-top:4px;text-transform:uppercase;letter-spacing:.04em;font-family:'Times New Roman',Times,serif}
 table{width:100%;border-collapse:collapse;font-size:13px}
-th{background:var(--panel2);color:var(--gold);text-align:left;padding:9px 8px;border:1px solid var(--line);white-space:nowrap;text-transform:uppercase;font-size:11px;letter-spacing:.05em}
-td{border:1px solid var(--line);padding:8px;vertical-align:top}
+th{background:var(--panel2);color:var(--gold);text-align:left;padding:9px 8px;border:1px solid var(--line);white-space:nowrap;text-transform:uppercase;font-size:11px;letter-spacing:.05em;font-family:'Times New Roman',Times,serif}
+td{border:1px solid var(--line);padding:8px;vertical-align:top;
+  font-family:'Courier New',Courier,monospace,'Times New Roman',serif;vertical-align:middle}
 tbody tr{transition:background .12s}
 tbody tr:hover{background:rgba(184,150,62,.05)}
 td select,td input{margin:0;padding:4px 8px;min-height:30px;font-size:12px}
-.muted{color:var(--grey);font-size:13px}
+.muted{color:var(--grey);font-size:13px;font-family:'Times New Roman',Times,serif}
 .overdue{background:rgba(168,50,50,.14)!important}
 .soon{background:rgba(184,150,62,.10)!important}
 .row2{display:flex;gap:12px}.row2>div{flex:1}
 .row3{display:flex;gap:12px}.row3>div{flex:1}
-.badge{display:inline-block;padding:3px 10px;border-radius:2px;font-size:11px;font-weight:600;white-space:nowrap}
+.badge{display:inline-block;padding:3px 10px;border-radius:2px;font-size:11px;font-weight:600;white-space:nowrap;font-family:'Courier New',Courier,monospace,serif}
 .b-blue{background:#3d4654}.b-green{background:#2c5e3a}.b-red{background:#7a2626}.b-grey{background:#3a3f46}.b-yellow{background:#7a6526}.b-purple{background:#54325e}.b-orange{background:#7a4a22}
-.att-item{padding:10px 12px;border-radius:3px;margin-bottom:8px;font-size:13px;line-height:1.5}
+.att-item{padding:10px 12px;border-radius:3px;margin-bottom:8px;font-size:13px;line-height:1.5;font-family:'Times New Roman',Times,serif}
 .att-item.overdue{border-left:4px solid var(--red)}
 .att-item.soon{border-left:4px solid var(--gold)}
-.empty{color:var(--grey);text-align:center;padding:26px 10px;font-size:14px}
+.empty{color:var(--grey);text-align:center;padding:26px 10px;font-size:14px;font-family:'Times New Roman',Times,serif}
 .empty .big{font-size:30px;display:block;margin-bottom:8px;filter:grayscale(40%)}
 hr{border:none;border-top:1px solid var(--line);margin:14px 0}
 /* ---------- тост и модалка ---------- */
-#toast{position:fixed;bottom:22px;right:22px;background:var(--green);color:#fff;padding:12px 20px;border-radius:4px;font-weight:700;display:none;z-index:100;box-shadow:0 8px 24px rgba(0,0,0,.5)}
+#toast{position:fixed;bottom:22px;right:22px;background:var(--green);color:#fff;padding:12px 20px;border-radius:4px;font-weight:700;display:none;z-index:100;box-shadow:0 8px 24px rgba(0,0,0,.5);font-family:'Times New Roman',Times,serif}
 #toast.errT{background:var(--red);color:#fff}
 #modalWrap{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;align-items:center;justify-content:center;z-index:90}
-#modal{background:var(--panel);border:1px solid var(--line);border-top:3px double var(--gold);border-radius:4px;padding:22px;max-width:380px;width:90%;text-align:center}
+#modal{background:var(--panel);border:1px solid var(--line);border-top:3px double var(--gold);border-radius:4px;padding:22px;max-width:380px;width:90%;text-align:center;font-family:'Times New Roman',Times,serif}
 #modal p{margin:12px 0 18px;line-height:1.5}
 #modal .btns{display:flex;gap:10px;justify-content:center}
 #modal .btn{width:auto;min-width:110px}
@@ -94,7 +99,7 @@ hr{border:none;border-top:1px solid var(--line);margin:14px 0}
   <input type="password" id="uPass" placeholder="Код доступа">
   <button type="button" class="btn" onclick="login()">Войти</button>
   <p id="err" class="err" style="display:none;margin-top:10px">Неверные данные!</p>
-  <p class="hint">Вход по фамилии с инициалами, полному ФИО или должности.<br>Коды доступа выдаёт прокурор района.</p>
+  <p class="hint">Вход по фамилии с инициалами или полному ФИО.<br>Коды доступа выдаёт прокурор района.</p>
 </div>
 
 <!-- ======== ПРИЛОЖЕНИЕ ======== -->
@@ -205,7 +210,6 @@ hr{border:none;border-top:1px solid var(--line);margin:14px 0}
       </div>
       <div class="card">
         <h3>📅 График проверок</h3>
-        <p class="muted" style="margin-bottom:8px">Журнал пуст — проверки создаются исполнителями с нуля, руководитель района утверждает их здесь.</p>
         <div style="overflow-x:auto"><table id="checkTable"></table></div>
       </div>
     </section>
@@ -279,9 +283,86 @@ hr{border:none;border-top:1px solid var(--line);margin:14px 0}
       </div>
       <div class="card">
         <h3>💾 Резервная копия</h3>
-        <p class="muted" style="margin-bottom:10px">Экспорт сохраняет все журналы и список сотрудников в один файл. Импорт восстанавливает данные из копии — удобно при переносе на другой компьютер или после очистки браузера.</p>
+        <p class="muted" style="margin-bottom:10px">Экспорт сохраняет все журналы и список сотрудников в один файл. Импорт восстанавливает данные из копии.</p>
         <button type="button" class="btn" onclick="exportData()">⬇️ Скачать резервную копию</button>
         <label class="btn btn-g" style="margin-top:8px;display:block">⬆️ Восстановить из файла<input type="file" accept=".json" style="display:none" onchange="importData(this.files[0])"></label>
+      </div>
+    </section>
+
+    <!-- 9. План работы -->
+    <section id="s9" style="display:none">
+      <div class="card" id="planFormCard" style="display:none">
+        <h3>➕ Мероприятие в план</h3>
+        <label>Наименование мероприятия</label><input id="planTitle" placeholder="напр. заседание координационного совещания по борьбе с преступностью">
+        <div class="row3">
+          <div><label>Срок</label><input type="date" id="planDate"></div>
+          <div><label>Ответственный</label><select id="planExec"></select></div>
+          <div><label>Статус</label><select id="planStatus"><option>Планируется</option><option>В работе</option><option>Выполнено</option></select></div>
+        </div>
+        <button type="button" class="btn" onclick="addPlan()">Добавить в план</button>
+      </div>
+      <div class="card"><h3>🗓️ План основных мероприятий района</h3>
+        <div style="overflow-x:auto"><table id="planTable"></table></div>
+      </div>
+    </section>
+
+    <!-- 10. Поручения -->
+    <section id="s10" style="display:none">
+      <div class="card" id="taskFormCard" style="display:none">
+        <h3>➕ Дать поручение</h3>
+        <label>Содержание поручения</label><input id="taskText" placeholder="что конкретно сделать">
+        <div class="row3">
+          <div><label>Кому</label><select id="taskExec"></select></div>
+          <div><label>Дата постановки</label><input type="date" id="taskDate"></div>
+          <div><label>Срок исполнения</label><input type="date" id="taskDue"></div>
+        </div>
+        <button type="button" class="btn" onclick="addTask()">Поставить на контроль</button>
+      </div>
+      <div class="card"><h3>📋 Поручения и контроль исполнения</h3>
+        <div style="overflow-x:auto"><table id="taskTable"></table></div>
+      </div>
+    </section>
+
+    <!-- 11. Дежурства -->
+    <section id="s11" style="display:none">
+      <div class="card" id="dutyFormCard" style="display:none">
+        <h3>➕ Назначить дежурным</h3>
+        <div class="row2">
+          <div><label>Дата дежурства</label><input type="date" id="dutyDate"></div>
+          <div><label>Дежурный</label><select id="dutyExec"></select></div>
+        </div>
+        <label>Примечание</label><input id="dutyNote" placeholder="напр. дежурный помощник, с 9:00 до 18:00, каб. 14">
+        <button type="button" class="btn" onclick="addDuty()">Внести в график</button>
+      </div>
+      <div class="card"><h3>🌙 График дежурств</h3>
+        <p class="muted" style="margin-bottom:8px">Дежурный прокурор (помощник) в выходные и праздничные дни обеспечивает приём обращений и участие в неотложных процессуальных действиях.</p>
+        <div style="overflow-x:auto"><table id="dutyTable"></table></div>
+      </div>
+    </section>
+
+    <!-- 12. Статистика -->
+    <section id="s12" style="display:none">
+      <div class="card"><h3>📊 Акты реагирования</h3>
+        <p class="muted" style="margin-bottom:8px">Сводка формируется автоматически по данным журнала надзорных производств.</p>
+        <div style="overflow-x:auto"><table id="statActs"></table></div>
+      </div>
+      <div class="card"><h3>📊 Работа с обращениями и исполнение</h3>
+        <div style="overflow-x:auto"><table id="statGen"></table></div>
+      </div>
+      <div class="card"><h3>📊 По исполнителям</h3>
+        <div style="overflow-x:auto"><table id="statExec"></table></div>
+      </div>
+    </section>
+
+    <!-- 13. Реквизиты -->
+    <section id="s13" style="display:none">
+      <div class="card" id="infoCard"></div>
+      <div class="card" id="infoEditCard" style="display:none">
+        <h3>✏️ Редактирование реквизитов</h3>
+        <label>Адрес</label><input id="infAddr">
+        <div class="row2"><div><label>Телефон дежурной части</label><input id="infPhone"></div><div><label>Телефон доверия</label><input id="infHot"></div></div>
+        <label>Режим работы</label><input id="infHours">
+        <button type="button" class="btn" onclick="saveInfo()">Сохранить реквизиты</button>
       </div>
     </section>
   </main>
@@ -292,13 +373,11 @@ hr{border:none;border-top:1px solid var(--line);margin:14px 0}
 
 <script>
 const $=id=>document.getElementById(id);
-const TABS={1:'Приборка',2:'Регистрация',3:'Надзорные производства',4:'Проверки',5:'Приёмная',6:'Правовая база',7:'Кадры',8:'Администрирование'};
-const ICONS={1:'📊',2:'📄',3:'🗂️',4:'📅',5:'👥',6:'📖',7:'🧑‍💼',8:'🔐'};
-const EDIT_LABEL={2:'regFormCard',3:'npFormCard',4:'checkFormCard',5:'citFormCard',7:'candFormCard'};
+const TABS={1:'Приборка',2:'Регистрация',3:'Надзорные производства',4:'Проверки',5:'Приёмная',6:'Правовая база',7:'Кадры',8:'Администрирование',9:'План работы',10:'Поручения',11:'Дежурства',12:'Статистика',13:'Реквизиты'};
+const ICONS={1:'📊',2:'📄',3:'🗂️',4:'📅',5:'👥',6:'📖',7:'🧑‍💼',8:'🔐',9:'🗓️',10:'📋',11:'🌙',12:'📈',13:'📞'};
+const EDIT_LABEL={2:'regFormCard',3:'npFormCard',4:'checkFormCard',5:'citFormCard',7:'candFormCard',9:'planFormCard',10:'taskFormCard',11:'dutyFormCard'};
 const NP_STATUS=['В производстве','Продлено','Передано в суд','В суде','Исполнено','Архив'];
 const NP_ACTIVE=['В производстве','Продлено','Передано в суд','В суде'];
-/* Ключ хранилища теперь постоянный: при обновлении кода данные сохраняются.
-   OLD_KEYS — старые ключи, с которых данные автоматически переносятся один раз. */
 const KEY='nador_db';
 const OLD_KEYS=['nador_db_v5','nador_db_v4','nador_db_v3'];
 let db=null,users=null,me=null,curTab=1;
@@ -306,36 +385,45 @@ let db=null,users=null,me=null,curTab=1;
 /* ---------- должности и права ---------- */
 function defaultUsers(){return[
  {fio:'Зинченко Артём Анатольевич',login:'Зинченко А.А.',pos:'Прокурор района',pass:'7401',
-  tabs:[1,2,3,4,5,6,7,8],edit:[2,3,4,5,7,8],del:true,npAll:true,admin:true},
+  tabs:[1,2,3,4,5,6,7,8,9,10,11,12,13],edit:[2,3,4,5,7,9,10,11,13],del:true,npAll:true,admin:true},
  {fio:'Зинченко Елизавета Анатольевна',login:'Зинченко Е.А.',pos:'Заместитель прокурора района',pass:'7402',
-  tabs:[1,2,3,4,5,6,7],edit:[2,3,4,5],del:true,npAll:true,admin:false},
+  tabs:[1,2,3,4,5,6,7,9,10,11,12,13],edit:[2,3,4,5,9,10,11],del:true,npAll:true,admin:false},
  {fio:'Зинченко Василиса Витальевна',login:'Зинченко В.В.',pos:'Старший помощник прокурора',pass:'7403',
-  tabs:[1,2,3,4,5,6,7],edit:[2,3,4,5],del:false,npAll:true,admin:false},
+  tabs:[1,2,3,4,5,6,7,9,10,11,12,13],edit:[2,3,4,5,9,10,11],del:false,npAll:true,admin:false},
  {fio:'Зинченко Каролина Витальевна',login:'Зинченко К.В.',pos:'Помощник прокурора',pass:'7404',
-  tabs:[1,2,3,5,6],edit:[3,5],del:false,npAll:false,admin:false}
+  tabs:[1,2,3,5,6,10,11,12,13],edit:[3,5],del:false,npAll:false,admin:false}
 ];}
 
 /* ---------- хранилище ---------- */
 function load(){
   try{
     const raw=JSON.parse(localStorage.getItem(KEY));
-    if(raw&&raw.db&&raw.users){db=raw.db;users=raw.users;return}
+    if(raw&&raw.db&&raw.users){db=raw.db;users=raw.users}
   }catch(e){}
-  /* миграция: если база под новым ключом пуста, забираем данные со старых ключей */
-  for(const k of OLD_KEYS){
-    try{
-      const raw=JSON.parse(localStorage.getItem(k));
-      if(raw&&raw.db&&raw.users){
-        db=raw.db;users=raw.users;
-        if(!db.seq)db.seq={np:0,cit:0};
-        save();
-        toast('Данные перенесены из предыдущей версии');
-        return;
-      }
-    }catch(e){}
+  if(!db){
+    for(const k of OLD_KEYS){
+      try{
+        const raw=JSON.parse(localStorage.getItem(k));
+        if(raw&&raw.db&&raw.users){
+          db=raw.db;users=raw.users;
+          toast('Данные перенесены из предыдущей версии');
+          break;
+        }
+      }catch(e){}
+    }
   }
-  users=defaultUsers();
-  db={seq:{np:0,cit:0},reg:[],np:[],checks:[],cit:[],cand:[]};
+  if(!db){
+    users=defaultUsers();
+    db={seq:{},reg:[],np:[],checks:[],cit:[],cand:[]};
+  }
+  users=users||defaultUsers();
+  if(!db.seq)db.seq={};
+  ['np','cit','task','plan','duty'].forEach(k=>{if(!db.seq[k])db.seq[k]=0});
+  ['reg','np','checks','cit','cand','plan','tasks','duty'].forEach(k=>{if(!db[k])db[k]=[]});
+  if(!db.info)db.info={address:'г. Челябинск, Тракторозаводской район — заполните в разделе «Реквизиты»',
+    phone:'+7 (351) 000-00-00 — заполните в разделе «Реквизиты»',
+    hot:'Телефон доверия Генпрокуратуры РФ: +7 (495) 987-56-56',
+    hours:'Пн–Чт 9:00–18:00, Пт 9:00–16:45, обед 13:00–13:45'};
   save();
 }
 function save(){localStorage.setItem(KEY,JSON.stringify({db,users}))}
@@ -354,7 +442,7 @@ function importData(file){
   const r=new FileReader();
   r.onload=()=>{try{
     const raw=JSON.parse(r.result);
-    if(raw.db&&raw.users){db=raw.db;users=raw.users;save();renderAll();buildNav();renderSideUser();toast('Данные восстановлены из копии')}
+    if(raw.db&&raw.users){db=raw.db;users=raw.users;load();save();renderAll();buildNav();renderSideUser();toast('Данные восстановлены из копии')}
     else toast('Неверный формат файла',true);
   }catch(e){toast('Не удалось прочитать файл',true)}};
   r.readAsText(file);
@@ -390,6 +478,7 @@ function enter(){
 function logout(){localStorage.removeItem('nador_user');location.reload()}
 
 /* ---------- навигация и права ---------- */
+const TAB_COUNT=13;
 function buildNav(){
   $('nav').innerHTML=Object.keys(TABS).map(i=>{
     const visible=me.tabs.includes(+i);
@@ -402,13 +491,14 @@ function renderSideUser(){
 function tab(i){
   if(!me.tabs.includes(i)){toast('Нет доступа к разделу «'+TABS[i]+'»',true);return}
   curTab=i;
-  for(let j=1;j<=8;j++)$('s'+j).style.display=(j===i)?'block':'none';
+  for(let j=1;j<=TAB_COUNT;j++)$('s'+j).style.display=(j===i)?'block':'none';
   Object.keys(TABS).forEach(j=>$('navItem'+j).classList.toggle('active',+j===i));
   $('tabTitle').textContent=ICONS[i]+' '+TABS[i];
   $('todayLine').textContent=new Date().toLocaleDateString('ru-RU',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
   const formId=EDIT_LABEL[i];
   Object.values(EDIT_LABEL).forEach(id=>$(id).style.display='none');
   if(formId&&me.edit.includes(i))$(formId).style.display='block';
+  if(i===13)$('infoEditCard').style.display=canEdit(13)?'block':'none';
   fillExecutors();renderAll();
 }
 const canEdit=t=>me.edit.includes(t);
@@ -417,29 +507,39 @@ const npVisible=()=>me.npAll?db.np:db.np.filter(x=>x.exec===me.login);
 /* ---------- рендеры ---------- */
 function fillExecutors(){
   const opts=users.map(u=>`<option>${u.login}</option>`).join('');
-  ['npExec','regExec','citExec'].forEach(id=>{const el=$(id);const v=el.value;el.innerHTML=opts;if(v)el.value=v});
+  ['npExec','regExec','citExec','planExec','taskExec','dutyExec'].forEach(id=>{const el=$(id);if(!el)return;const v=el.value;el.innerHTML=opts;if(v)el.value=v});
 }
 function dueClass(d){if(!d)return'';const t=new Date();t.setHours(0,0,0,0);const dd=new Date(d);
   return dd<t?'overdue':(dd-t<7*864e5?'soon':'')}
 function fmt(d){if(!d)return'—';return new Date(d).toLocaleDateString('ru-RU')}
-function badge(text){const m={'В производстве':'b-yellow','Продлено':'b-blue','Передано в суд':'b-orange','В суде':'b-orange','Исполнено':'b-green','Архив':'b-grey','На контроле':'b-blue','В работе':'b-yellow','Отозвано':'b-grey','Черновик':'b-grey','Согласовано прокурором':'b-green','Отказано':'b-red','Назначено':'b-blue','Принят':'b-green','Отказ':'b-red','Протест':'b-purple','Представление':'b-purple','Предостережение':'b-purple','Постановление':'b-purple','Обращение в суд':'b-purple','Надзорное производство':'b-grey','Проверка':'b-blue','Входящее':'b-blue','Исходящее':'b-grey'};
+function badge(text){const m={'В производстве':'b-yellow','Продлено':'b-blue','Передано в суд':'b-orange','В суде':'b-orange','Исполнено':'b-green','Архив':'b-grey','На контроле':'b-blue','В работе':'b-yellow','Отозвано':'b-grey','Черновик':'b-grey','Согласовано прокурором':'b-green','Отказано':'b-red','Назначено':'b-blue','Принят':'b-green','Отказ':'b-red','Планируется':'b-grey','Выполнено':'b-green','Снято с контроля':'b-grey','Протест':'b-purple','Представление':'b-purple','Предостережение':'b-purple','Постановление':'b-purple','Обращение в суд':'b-purple','Надзорное производство':'b-grey','Проверка':'b-blue','Входящее':'b-blue','Исходящее':'b-grey'};
   return `<span class="badge ${m[text]||'b-grey'}">${text}</span>`}
-function renderAll(){renderGreet();renderStats();renderAttention();renderReg();renderNp();renderChecks();renderCit();renderCand();if(me.admin)renderAdm()}
+function renderAll(){
+  renderGreet();renderStats();renderAttention();
+  renderReg();renderNp();renderChecks();renderCand();
+  renderPlan();renderTasks();renderDuty();renderStat();renderInfo();
+  if(me.admin)renderAdm();
+}
 
 function renderGreet(){
   const h=new Date().getHours();
   const word=h<12?'Доброе утро':h<18?'Добрый день':'Добрый вечер';
+  const duty=db.duty.find(x=>x.date===todayStr());
   $('greetCard').innerHTML=`<p style="font-size:17px;margin-bottom:6px">${word}, <b style="color:var(--gold)">${me.login}</b>!</p>
-   <p class="muted">Вы вошли как <b style="color:var(--txt)">${me.pos}</b>. ${me.npAll?'Вам доступны надзорные производства всего района.':'Вам доступны производства, где вы назначены исполнителем.'}</p>`;
+   <p class="muted">Вы вошли как <b style="color:var(--txt)">${me.pos}</b>. ${me.npAll?'Вам доступны надзорные производства всего района.':'Вам доступны производства, где вы назначены исполнителем.'}</p>
+   ${duty?`<p style="margin-top:8px">🌙 Сегодня дежурит: <b style="color:var(--gold)">${duty.exec}</b>${duty.note?' — '+duty.note:''}</p>`:''}`;
 }
 function renderStats(){
   const act=npVisible().filter(x=>NP_ACTIVE.includes(x.status));
   const over=act.filter(x=>x.due&&new Date(x.due)<new Date());
   const soon=act.filter(x=>x.due&&new Date(x.due)>=new Date()&&new Date(x.due)-new Date()<7*864e5);
   const cit=db.cit.filter(x=>x.status==='В работе');
+  const task=me.npAll?db.tasks:db.tasks.filter(x=>x.exec===me.login);
+  const tOver=task.filter(x=>x.status==='В работе'&&x.due&&new Date(x.due)<new Date()).length;
   const st=(n,l,c,go)=>`<div class="stat" onclick="tab(${go})"><div class="num ${c}">${n}</div><div class="lbl">${l}</div></div>`;
   $('statgrid').innerHTML=st(act.length,'НП в производстве','','3')+st(over.length,'просрочено НП','red','3')
-   +st(soon.length,'срок истекает на неделе','red','3')+st(cit.length,'обращений в работе','','5');
+   +st(soon.length,'срок истекает на неделе','red','3')+st(cit.length,'обращений в работе','','5')
+   +st(tOver,'просрочено поручений','red','10');
 }
 function attLine(title,subject,exec,due){
   const cls=dueClass(due);
@@ -449,6 +549,8 @@ function renderAttention(){
   let html='';
   npVisible().forEach(x=>{if(x.due&&NP_ACTIVE.includes(x.status))html+=attLine(x.num,x.subject,x.exec,x.due)});
   db.cit.forEach(x=>{if(x.status==='В работе'){const due=new Date(new Date(x.date).getTime()+x.days*864e5).toISOString().slice(0,10);html+=attLine('Обращение №'+x.id,x.subject,x.exec,due)}});
+  (me.npAll?db.tasks:db.tasks.filter(x=>x.exec===me.login)).forEach(x=>{
+    if(x.status==='В работе'&&x.due)html+=attLine('Поручение №'+x.id,x.text,x.exec,x.due)});
   $('attention').innerHTML=html||`<div class="empty"><span class="big">✅</span>Просроченных и срочных записей нет. Все сроки под контролем.</div>`;
 }
 function renderReg(){
@@ -500,6 +602,69 @@ function renderCand(){
    +(canEdit(7)?`<td><select onchange="updRec('cand',${x.id},'status',this.value)">${['Назначено','Принят','Отказ','Архив'].map(s=>`<option${x.status===s?' selected':''}>${s}</option>`).join('')}</select></td><td><button class="btn btn-r" style="padding:4px 8px" onclick="delRec('cand',${x.id})">✕</button></td>`:`<td>${badge(x.status)}</td>`)+'</tr>'});
   $('candTable').innerHTML=h;
 }
+function renderPlan(){
+  let h='<tr><th>Мероприятие</th><th>Срок</th><th>Ответственный</th><th>Статус</th>'+(canEdit(9)?'<th></th>':'')+'</tr>';
+  if(!db.plan.length)h+=`<tr><td colspan="5"><div class="empty"><span class="big">🗓️</span>План пуст. Внесите первое мероприятие.</div></td></tr>`;
+  [...db.plan].sort((a,b)=>(a.date||'').localeCompare(b.date||'')).forEach(x=>{
+    h+=`<tr class="${dueClass(x.date)}"><td>${x.title}</td><td>${fmt(x.date)}</td><td>${x.exec}</td>`
+     +(canEdit(9)?`<td><select onchange="updRec('plan',${x.id},'status',this.value)">${['Планируется','В работе','Выполнено'].map(s=>`<option${x.status===s?' selected':''}>${s}</option>`).join('')}</select></td><td><button class="btn btn-r" style="padding:4px 8px" onclick="delRec('plan',${x.id})">✕</button></td>`:`<td>${badge(x.status)}</td>`)+'</tr>'});
+  $('planTable').innerHTML=h;
+}
+function renderTasks(){
+  const list=me.npAll?db.tasks:[...db.tasks.filter(x=>x.exec===me.login)];
+  let h='<tr><th>№</th><th>Дата</th><th>Содержание</th><th>Кому</th><th>Срок</th><th>Статус</th><th>Отметка об исполнении</th>'+(canEdit(10)?'<th></th>':'')+'</tr>';
+  if(!list.length)h+=`<tr><td colspan="8"><div class="empty"><span class="big">📋</span>Поручений нет.</div></td></tr>`;
+  [...list].sort((a,b)=>(a.due||'').localeCompare(b.due||'')).forEach(x=>{
+    const rowCls=(x.status==='В работе'&&x.due)?dueClass(x.due):'';
+    h+=`<tr class="${rowCls}"><td>${x.id}</td><td>${fmt(x.date)}</td><td>${x.text}</td><td>${x.exec}</td><td>${fmt(x.due)}</td>`
+     +(canEdit(10)?`<td><select onchange="updRec('tasks',${x.id},'status',this.value)">${['В работе','Исполнено','Снято с контроля'].map(s=>`<option${x.status===s?' selected':''}>${s}</option>`).join('')}</select></td>`
+       +`<td style="min-width:130px"><input value="${(x.result||'').replace(/"/g,'&quot;')}" onchange="updRec('tasks',${x.id},'result',this.value)" placeholder="как исполнено"></td>`
+       +`<td><button class="btn btn-r" style="padding:4px 8px" onclick="delRec('tasks',${x.id})">✕</button></td>`
+      :`<td>${badge(x.status)}</td><td>${x.result||'—'}</td>`)+'</tr>'});
+  $('taskTable').innerHTML=h;
+}
+function renderDuty(){
+  let h='<tr><th>Дата</th><th>Дежурный</th><th>Примечание</th>'+(canEdit(11)?'<th></th>':'')+'</tr>';
+  if(!db.duty.length)h+=`<tr><td colspan="4"><div class="empty"><span class="big">🌙</span>График пуст. Назначьте первого дежурного.</div></td></tr>`;
+  [...db.duty].sort((a,b)=>(a.date||'').localeCompare(b.date||'')).forEach(x=>{
+    const isToday=x.date===todayStr();
+    h+=`<tr class="${isToday?'soon':''}"><td>${fmt(x.date)}${isToday?' <b style="color:var(--gold)">← сегодня</b>':''}</td><td>${x.exec}</td><td>${x.note||'—'}</td>`
+     +(canEdit(11)?`<td><button class="btn btn-r" style="padding:4px 8px" onclick="delRec('duty',${x.id})">✕</button></td>`:'')+'</tr>'});
+  $('dutyTable').innerHTML=h;
+}
+function renderStat(){
+  const acts=['Протест','Представление','Предостережение','Постановление','Обращение в суд','Проверка'];
+  let h='<tr><th>Вид акта</th><th>Всего</th><th>Исполнено</th><th>В работе</th></tr>';
+  acts.forEach(v=>{const arr=db.np.filter(x=>x.vid===v);
+    h+=`<tr><td>${v}</td><td>${arr.length}</td><td>${arr.filter(x=>x.status==='Исполнено').length}</td><td>${arr.filter(x=>NP_ACTIVE.includes(x.status)).length}</td></tr>`});
+  h+=`<tr style="font-weight:700"><td>Итого</td><td>${db.np.length}</td><td>${db.np.filter(x=>x.status==='Исполнено').length}</td><td>${db.np.filter(x=>NP_ACTIVE.includes(x.status)).length}</td></tr>`;
+  $('statActs').innerHTML=h;
+  const done=db.cit.filter(x=>x.status==='Исполнено');
+  const overCit=db.cit.filter(x=>x.status==='В работе'&&new Date(new Date(x.date).getTime()+x.days*864e5)<new Date()).length;
+  $('statGen').innerHTML=`<tr><th>Показатель</th><th>Значение</th></tr>
+   <tr><td>Обращений граждан зарегистрировано</td><td>${db.cit.length}</td></tr>
+   <tr><td>Рассмотрено (исполнено)</td><td>${done.length}</td></tr>
+   <tr><td>Просрочено сроков рассмотрения</td><td style="color:${overCit?'var(--red)':'inherit'}">${overCit}</td></tr>
+   <tr><td>Доля исполненных обращений</td><td>${db.cit.length?Math.round(done.length/db.cit.length*100):0}%</td></tr>
+   <tr><td>Поручений всего / исполнено</td><td>${db.tasks.length} / ${db.tasks.filter(x=>x.status==='Исполнено').length}</td></tr>`;
+  let he='<tr><th>Сотрудник</th><th>НП в работе</th><th>Просрочено НП</th><th>Обращений в работе</th><th>Поручений в работе</th></tr>';
+  users.forEach(u=>{
+    const npU=db.np.filter(x=>x.exec===u.login&&NP_ACTIVE.includes(x.status));
+    const ovU=npU.filter(x=>x.due&&new Date(x.due)<new Date()).length;
+    const cU=db.cit.filter(x=>x.exec===u.login&&x.status==='В работе').length;
+    const tU=db.tasks.filter(x=>x.exec===u.login&&x.status==='В работе').length;
+    he+=`<tr><td>${u.login}</td><td>${npU.length}</td><td style="color:${ovU?'var(--red)':'inherit'}">${ovU}</td><td>${cU}</td><td>${tU}</td></tr>`});
+  $('statExec').innerHTML=he;
+}
+function renderInfo(){
+  const i=db.info;
+  $('infoCard').innerHTML=`<h3>📞 Реквизиты прокуратуры</h3>
+   <p style="line-height:2">🏛 <b style="color:var(--txt)">${i.address}</b><br>
+   ☎️ Дежурная часть: <b style="color:var(--txt)">${i.phone}</b><br>
+   🛡 ${i.hot}<br>
+   🕘 Режим работы: <b style="color:var(--txt)">${i.hours}</b></p>`;
+  if(canEdit(13)){const e=$('infoEditCard');$('infAddr').value=i.address;$('infPhone').value=i.phone;$('infHot').value=i.hot;$('infHours').value=i.hours;e.style.display='block'}
+}
 
 /* ---------- CRUD ---------- */
 function addReg(){
@@ -531,8 +696,33 @@ function addCand(){
   db.cand.push({id:Date.now(),fio:$('candFio').value.trim(),edu:$('candEdu').value.trim(),pos:$('candPos').value,date:$('candDate').value,status:$('candStatus').value});
   save();$('candFio').value='';$('candEdu').value='';toast('Кандидат добавлен');renderCand();
 }
+function addPlan(){
+  const t=$('planTitle').value.trim();
+  if(!t){toast('Укажите наименование мероприятия',true);return}
+  db.seq.plan++;
+  db.plan.push({id:Date.now(),num:db.seq.plan,title:t,date:$('planDate').value,exec:$('planExec').value,status:$('planStatus').value});
+  save();$('planTitle').value='';toast('Мероприятие внесено в план');renderPlan();
+}
+function addTask(){
+  const t=$('taskText').value.trim();
+  if(!t){toast('Укажите содержание поручения',true);return}
+  db.seq.task++;
+  db.tasks.push({id:db.seq.task,text:t,date:$('taskDate').value||todayStr(),exec:$('taskExec').value,due:$('taskDue').value,status:'В работе',result:''});
+  save();$('taskText').value='';toast('Поручение №'+db.seq.task+' поставлено на контроль');renderTasks();renderStats();
+}
+function addDuty(){
+  if(!$('dutyDate').value){toast('Укажите дату дежурства',true);return}
+  db.seq.duty++;
+  db.duty.push({id:Date.now(),date:$('dutyDate').value,exec:$('dutyExec').value,note:$('dutyNote').value.trim()});
+  save();$('dutyNote').value='';toast('Дежурный назначен');renderDuty();renderGreet();
+}
 function updNp(id,f,v){const x=db.np.find(n=>n.id===id);if(x){x[f]=v;save();renderNp();renderStats()}}
 function updRec(coll,id,f,v){const x=db[coll].find(n=>n.id===id);if(x){x[f]=v;save();renderAll()}}
+function saveInfo(){
+  db.info={address:$('infAddr').value.trim()||db.info.address,phone:$('infPhone').value.trim()||db.info.phone,
+    hot:$('infHot').value.trim()||db.info.hot,hours:$('infHours').value.trim()||db.info.hours};
+  save();renderInfo();toast('Реквизиты сохранены');
+}
 function delRec(coll,id){
   if(!me.del){toast('У вас нет права удалять записи',true);return}
   askConfirm('Запись будет удалена безвозвратно. Продолжить?',()=>{
@@ -551,9 +741,9 @@ function renderAdm(){
    <div><label>Новый код доступа</label><input id="adPass" placeholder="не меняется, если пусто"></div>
    <div><label>Видимость НП</label><select id="adNpAll"><option value="1"${u.npAll?' selected':''}>Все производства района</option><option value="0"${u.npAll?'':' selected'}>Только свои</option></select></div></div>
    <p style="margin:10px 0 6px"><b>Доступные разделы:</b></p>
-   <p>${[1,2,3,4,5,6,7,8].map(i=>`<label style="display:inline-block;margin:0 14px 6px 0"><input type="checkbox" class="adTab" value="${i}" ${u.tabs.includes(i)?'checked':''} style="width:auto;margin-right:4px"> ${TABS[i]}</label>`).join('')}</p>
+   <p>${Object.keys(TABS).map(i=>`<label style="display:inline-block;margin:0 14px 6px 0"><input type="checkbox" class="adTab" value="${i}" ${u.tabs.includes(+i)?'checked':''} style="width:auto;margin-right:4px"> ${TABS[i]}</label>`).join('')}</p>
    <p style="margin:10px 0 6px"><b>Право создавать и редактировать:</b></p>
-   <p>${[2,3,4,5,7].map(i=>`<label style="display:inline-block;margin:0 14px 6px 0"><input type="checkbox" class="adEdit" value="${i}" ${u.edit.includes(i)?'checked':''} style="width:auto;margin-right:4px"> ${TABS[i]}</label>`).join('')}</p>
+   <p>${[2,3,4,5,7,9,10,11,13].map(i=>`<label style="display:inline-block;margin:0 14px 6px 0"><input type="checkbox" class="adEdit" value="${i}" ${u.edit.includes(i)?'checked':''} style="width:auto;margin-right:4px"> ${TABS[i]}</label>`).join('')}</p>
    <p style="margin:12px 0">
    <label style="display:inline-block;margin-right:18px"><input type="checkbox" id="adDel" ${u.del?'checked':''} style="width:auto;margin-right:4px"> удаление записей</label>
    <label style="display:inline-block"><input type="checkbox" id="adAdmin" ${u.admin?'checked':''} style="width:auto;margin-right:4px"> администратор системы</label></p>
