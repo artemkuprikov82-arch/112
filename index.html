@@ -51,8 +51,8 @@ label{font-size:12px;color:var(--grey);text-transform:uppercase;letter-spacing:.
 .stat .lbl{font-size:12px;color:var(--grey);margin-top:4px;text-transform:uppercase;letter-spacing:.04em;font-family:'Times New Roman',Times,serif}
 table{width:100%;border-collapse:collapse;font-size:13px}
 th{background:var(--panel2);color:var(--gold);text-align:left;padding:9px 8px;border:1px solid var(--line);white-space:nowrap;text-transform:uppercase;font-size:11px;letter-spacing:.05em;font-family:'Times New Roman',Times,serif}
-td{border:1px solid var(--line);padding:8px;vertical-align:top;
-  font-family:'Courier New',Courier,monospace,'Times New Roman',serif;vertical-align:middle}
+td{border:1px solid var(--line);padding:8px;vertical-align:middle;
+  font-family:'Courier New',Courier,monospace,'Times New Roman',serif}
 tbody tr{transition:background .12s}
 tbody tr:hover{background:rgba(184,150,62,.05)}
 td select,td input{margin:0;padding:4px 8px;min-height:30px;font-size:12px}
@@ -99,7 +99,7 @@ hr{border:none;border-top:1px solid var(--line);margin:14px 0}
   <input type="password" id="uPass" placeholder="Код доступа">
   <button type="button" class="btn" onclick="login()">Войти</button>
   <p id="err" class="err" style="display:none;margin-top:10px">Неверные данные!</p>
-  <p class="hint">Вход по фамилии с инициалами или полному ФИО.<br>Коды доступа выдаёт прокурор района.</p>
+  <p class="hint">Вход по фамилии с инициалами, полному ФИО или должности.<br>Коды доступа выдаёт прокурор района.</p>
 </div>
 
 <!-- ======== ПРИЛОЖЕНИЕ ======== -->
@@ -382,7 +382,7 @@ const KEY='nador_db';
 const OLD_KEYS=['nador_db_v5','nador_db_v4','nador_db_v3'];
 let db=null,users=null,me=null,curTab=1;
 
-/* ---------- должности и права ---------- */
+/* ---------- должности и пароли ---------- */
 function defaultUsers(){return[
  {fio:'Зинченко Артём Анатольевич',login:'Зинченко А.А.',pos:'Прокурор района',pass:'7401',
   tabs:[1,2,3,4,5,6,7,8,9,10,11,12,13],edit:[2,3,4,5,7,9,10,11,13],del:true,npAll:true,admin:true},
@@ -442,7 +442,7 @@ function importData(file){
   const r=new FileReader();
   r.onload=()=>{try{
     const raw=JSON.parse(r.result);
-    if(raw.db&&raw.users){db=raw.db;users=raw.users;load();save();renderAll();buildNav();renderSideUser();toast('Данные восстановлены из копии')}
+    if(raw.db&&raw.users){db=raw.db;users=raw.users;save();renderAll();buildNav();renderSideUser();toast('Данные восстановлены из копии')}
     else toast('Неверный формат файла',true);
   }catch(e){toast('Не удалось прочитать файл',true)}};
   r.readAsText(file);
